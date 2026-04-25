@@ -1,0 +1,937 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ClawPilot Hub — Microsoft MCAPS Israel · AI Skills</title>
+<meta name="description" content="Curated AI agent skills for Microsoft MCAPS Israel. Built for ClawPilot, also works with Claude Code, Cursor and GitHub Copilot." />
+<link rel="icon" href="assets/clawpilot-logo.jpg" />
+<style>
+  :root {
+    --ms-blue: #0078D4;
+    --ms-blue-dark: #005A9E;
+    --ms-blue-darker: #004578;
+    --ms-red: #F25022;
+    --ms-green: #7FBA00;
+    --ms-yellow: #FFB900;
+    --ink: #1B1B1F;
+    --ink-2: #3B3B41;
+    --muted: #605E5C;
+    --muted-2: #8A8886;
+    --line: #EDEBE9;
+    --line-2: #E1DFDD;
+    --bg: #FAF9F8;
+    --bg-2: #F3F2F1;
+    --surface: #ffffff;
+    --radius: 8px;
+    --radius-lg: 14px;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.04), 0 0 1px rgba(0,0,0,.06);
+    --shadow-md: 0 4px 12px rgba(0,0,0,.06), 0 0 1px rgba(0,0,0,.08);
+    --shadow-lg: 0 18px 50px rgba(0,90,158,.10), 0 4px 14px rgba(0,0,0,.05);
+    --font-ui: "Segoe UI Variable", "Segoe UI", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+    --font-display: "Segoe UI Variable Display", "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-ui);
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: var(--ms-blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ---------- Top Banner ---------- */
+  .topbanner {
+    background: linear-gradient(90deg, #f3f2f1 0%, #fff 100%);
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-2);
+    font-size: 13px;
+    text-align: center;
+    padding: 8px 16px;
+  }
+  .topbanner .new-pill {
+    display: inline-block; background: var(--ms-blue); color: #fff;
+    font-weight: 600; padding: 2px 8px; border-radius: 999px; font-size: 11px;
+    letter-spacing: .04em; margin-right: 8px;
+  }
+
+  /* ---------- Header ---------- */
+  header {
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    position: sticky; top: 0; z-index: 30;
+    backdrop-filter: saturate(140%) blur(8px);
+    background: rgba(255,255,255,.92);
+  }
+  .nav {
+    max-width: 1280px; margin: 0 auto; padding: 12px 24px;
+    display: flex; align-items: center; gap: 24px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 12px;
+    font-family: var(--font-display);
+    font-weight: 700; font-size: 18px;
+    color: var(--ink);
+  }
+  .brand img { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; }
+  .brand small { display: block; font-size: 11px; font-weight: 500; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 4px; margin-left: 16px; flex: 1; }
+  .nav-links a {
+    color: var(--ink-2); padding: 8px 12px; border-radius: 6px;
+    font-weight: 500; font-size: 14px;
+  }
+  .nav-links a:hover { background: var(--bg-2); text-decoration: none; }
+  .nav-links a.active { color: var(--ms-blue); background: rgba(0,120,212,.08); }
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: 14px;
+    border: 1px solid transparent; cursor: pointer; transition: all .15s ease;
+  }
+  .btn-primary { background: var(--ms-blue); color: #fff; }
+  .btn-primary:hover { background: var(--ms-blue-dark); text-decoration: none; }
+  .btn-ghost { background: transparent; color: var(--ink-2); border-color: var(--line-2); }
+  .btn-ghost:hover { background: var(--bg-2); }
+  .lang-toggle {
+    border: 1px solid var(--line-2); padding: 4px 10px; border-radius: 999px;
+    font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; background: #fff;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    background:
+      radial-gradient(1200px 500px at 12% -10%, rgba(0,120,212,.10), transparent 60%),
+      radial-gradient(900px 400px at 90% 0%, rgba(127,186,0,.10), transparent 60%),
+      linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+    padding: 72px 24px 56px;
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .hero-inner {
+    max-width: 1100px; margin: 0 auto; text-align: center;
+  }
+  .hero .pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #fff; border: 1px solid var(--line-2);
+    padding: 6px 14px; border-radius: 999px; font-size: 13px;
+    color: var(--ms-blue); font-weight: 600; box-shadow: var(--shadow-sm);
+  }
+  .hero .pill::before {
+    content: ""; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--ms-green); box-shadow: 0 0 0 4px rgba(127,186,0,.18);
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 6vw, 64px);
+    line-height: 1.05; margin: 24px 0 18px;
+    letter-spacing: -0.02em; font-weight: 700;
+    color: var(--ink);
+  }
+  .hero h1 .accent {
+    background: linear-gradient(90deg, var(--ms-red), var(--ms-yellow), var(--ms-green), var(--ms-blue));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    background-size: 200% 100%;
+    animation: shine 8s linear infinite;
+  }
+  @keyframes shine { 0%{background-position:0% 0;} 100%{background-position:200% 0;} }
+  .hero p.lede {
+    font-size: 19px; color: var(--ink-2); max-width: 720px;
+    margin: 0 auto 32px;
+  }
+  .hero-cta { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .hero-cta .btn-primary { padding: 12px 22px; font-size: 15px; }
+  .hero-cta .btn-ghost { padding: 12px 22px; font-size: 15px; }
+  .hero-meta {
+    margin-top: 36px; display: flex; gap: 32px; justify-content: center; flex-wrap: wrap;
+    color: var(--muted); font-size: 13px;
+  }
+  .hero-meta strong { color: var(--ink); font-weight: 700; font-size: 22px; display: block; font-family: var(--font-display); }
+
+  /* ---------- Layout ---------- */
+  main { max-width: 1280px; margin: 0 auto; padding: 40px 24px 80px; }
+  .section-head {
+    display: flex; align-items: end; justify-content: space-between;
+    gap: 16px; margin-bottom: 24px; flex-wrap: wrap;
+  }
+  .section-head h2 {
+    font-family: var(--font-display);
+    font-size: 28px; margin: 0; letter-spacing: -.01em;
+  }
+  .section-head p { margin: 4px 0 0; color: var(--muted); }
+
+  .layout { display: grid; grid-template-columns: 260px 1fr; gap: 32px; }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+
+  /* ---------- Sidebar ---------- */
+  aside.filters {
+    position: sticky; top: 88px; align-self: start;
+    background: #fff; border: 1px solid var(--line);
+    border-radius: var(--radius-lg); padding: 16px; box-shadow: var(--shadow-sm);
+    max-height: calc(100vh - 110px); overflow: auto;
+  }
+  .filters h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; margin: 0 0 12px; color: var(--muted); }
+  .filters .search-box {
+    display: flex; align-items: center; gap: 8px;
+    border: 1px solid var(--line-2); border-radius: 8px; padding: 8px 12px;
+    margin-bottom: 18px; background: var(--bg);
+  }
+  .filters .search-box input {
+    border: 0; background: transparent; outline: none; flex: 1; font-size: 14px;
+  }
+  .filters ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; }
+  .filters .cat {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 10px; border-radius: 6px; font-size: 14px;
+    color: var(--ink-2); cursor: pointer; transition: all .12s;
+  }
+  .filters .cat:hover { background: var(--bg-2); }
+  .filters .cat.active { background: rgba(0,120,212,.08); color: var(--ms-blue); font-weight: 600; }
+  .filters .cat .count { color: var(--muted-2); font-size: 12px; }
+
+  /* ---------- Toolbar ---------- */
+  .toolbar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; margin-bottom: 16px;
+  }
+  .toolbar .count { color: var(--muted); font-size: 14px; }
+  .toolbar select {
+    border: 1px solid var(--line-2); border-radius: 6px; padding: 6px 10px;
+    font-size: 13px; font-family: inherit; background: #fff;
+  }
+
+  /* ---------- Cards Grid ---------- */
+  .grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(290px,1fr));
+    gap: 18px;
+  }
+  .card {
+    background: #fff; border: 1px solid var(--line);
+    border-radius: var(--radius-lg); padding: 18px;
+    display: flex; flex-direction: column; gap: 10px;
+    box-shadow: var(--shadow-sm);
+    transition: all .18s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
+    background: linear-gradient(90deg, var(--ms-red), var(--ms-yellow), var(--ms-green), var(--ms-blue));
+    opacity: 0; transition: opacity .2s;
+  }
+  .card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); border-color: rgba(0,120,212,.4); }
+  .card:hover::before { opacity: 1; }
+  .card .row1 { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .card h3 { margin: 0; font-size: 16px; font-family: var(--font-display); font-weight: 600; }
+  .card .verified {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(127,186,0,.10); color: #517D00;
+    padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600;
+  }
+  .card .verified::before { content: "✓"; font-size: 11px; }
+  .card .meta {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    color: var(--muted); font-size: 12px;
+  }
+  .card .meta .ver { background: var(--bg-2); padding: 1px 8px; border-radius: 999px; }
+  .card .meta .pop { background: rgba(255,185,0,.12); color: #8A6500; padding: 1px 8px; border-radius: 999px; font-weight: 600; }
+  .card .meta .trending { background: rgba(242,80,34,.10); color: var(--ms-red); padding: 1px 8px; border-radius: 999px; font-weight: 600; }
+  .card .desc { color: var(--ink-2); font-size: 14px; line-height: 1.5; min-height: 42px; }
+  .card .compat { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+  .card .chip {
+    background: var(--bg-2); color: var(--ink-2);
+    padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 500;
+    border: 1px solid var(--line);
+  }
+  .card .chip.pilot { background: rgba(0,120,212,.10); color: var(--ms-blue); border-color: rgba(0,120,212,.20); font-weight: 600; }
+  .card .ask {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    margin-top: 8px; padding: 9px 12px; border-radius: 8px;
+    background: var(--bg); border: 1px dashed var(--line-2);
+    color: var(--ink-2); font-size: 13px; font-weight: 500;
+    cursor: pointer; transition: all .15s;
+  }
+  .card .ask:hover { background: rgba(0,120,212,.06); border-color: var(--ms-blue); color: var(--ms-blue); }
+
+  /* ---------- Mosaic / categories preview ---------- */
+  .cat-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 0 0 32px;
+  }
+  @media (max-width: 900px) { .cat-strip { grid-template-columns: repeat(2, 1fr); } }
+  .cat-card {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg);
+    padding: 18px; box-shadow: var(--shadow-sm);
+    display: flex; flex-direction: column; gap: 6px;
+    transition: all .18s ease; cursor: pointer;
+    position: relative; overflow: hidden;
+  }
+  .cat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .cat-card .icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center; font-size: 18px;
+    color: #fff; font-weight: 700;
+  }
+  .cat-card .name { font-weight: 700; font-family: var(--font-display); }
+  .cat-card .count { color: var(--muted); font-size: 12px; }
+  .icon.c1 { background: var(--ms-blue); }
+  .icon.c2 { background: var(--ms-green); }
+  .icon.c3 { background: var(--ms-red); }
+  .icon.c4 { background: var(--ms-yellow); color: var(--ink); }
+  .icon.c5 { background: #5C2D91; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    margin-top: 80px; background: #fff; border-top: 1px solid var(--line); padding: 40px 24px;
+  }
+  .foot {
+    max-width: 1280px; margin: 0 auto; display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px;
+  }
+  @media (max-width: 900px) { .foot { grid-template-columns: 1fr 1fr; } }
+  .foot h4 { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 12px; }
+  .foot ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .foot a { color: var(--ink-2); }
+  .foot .brand-foot { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .foot .brand-foot img { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; }
+  .foot small { color: var(--muted); }
+  .foot .copy { max-width: 1280px; margin: 28px auto 0; padding-top: 18px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 12px; }
+
+  /* ---------- Misc ---------- */
+  .empty {
+    background: #fff; border: 1px dashed var(--line-2); border-radius: var(--radius-lg);
+    padding: 48px; text-align: center; color: var(--muted);
+  }
+  /* ---------- Modal ---------- */
+  .modal-bg {
+    position: fixed; inset: 0; background: rgba(27,27,31,.55);
+    backdrop-filter: blur(4px); z-index: 100;
+    display: none; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .modal-bg.open { display: flex; }
+  .modal {
+    background: #fff; border-radius: var(--radius-lg);
+    width: 100%; max-width: 720px; max-height: 90vh; overflow: auto;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--line);
+  }
+  .modal header {
+    padding: 20px 24px; border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    position: static; backdrop-filter: none; background: #fff;
+  }
+  .modal header h3 { margin: 0; font-family: var(--font-display); font-size: 20px; }
+  .modal header .close {
+    background: transparent; border: 0; font-size: 22px; color: var(--muted);
+    cursor: pointer; line-height: 1; padding: 4px 8px; border-radius: 6px;
+  }
+  .modal header .close:hover { background: var(--bg-2); }
+  .modal .body { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+  .modal label { font-size: 13px; font-weight: 600; color: var(--ink-2); display: block; margin-bottom: 6px; }
+  .modal input[type=text], .modal textarea, .modal select {
+    width: 100%; border: 1px solid var(--line-2); border-radius: 8px;
+    padding: 10px 12px; font-size: 14px; font-family: inherit; outline: none;
+    background: #fff; color: var(--ink);
+  }
+  .modal input[type=text]:focus, .modal textarea:focus, .modal select:focus {
+    border-color: var(--ms-blue); box-shadow: 0 0 0 3px rgba(0,120,212,.15);
+  }
+  .modal textarea { resize: vertical; min-height: 200px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px; line-height: 1.55; }
+  .modal .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 600px) { .modal .row { grid-template-columns: 1fr; } }
+  .modal .drop {
+    border: 2px dashed var(--line-2); border-radius: 10px; padding: 22px;
+    text-align: center; color: var(--muted); cursor: pointer; transition: all .15s;
+    background: var(--bg);
+  }
+  .modal .drop:hover, .modal .drop.over { border-color: var(--ms-blue); background: rgba(0,120,212,.04); color: var(--ms-blue); }
+  .modal .drop strong { color: var(--ink); }
+  .modal .actions {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 16px 24px; border-top: 1px solid var(--line);
+    flex-wrap: wrap;
+  }
+  .modal .actions .left { color: var(--muted); font-size: 12px; }
+  .modal .actions .right { display: flex; gap: 8px; }
+  .badge-yours {
+    background: linear-gradient(90deg, var(--ms-red), var(--ms-yellow), var(--ms-green), var(--ms-blue));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    font-size: 11px; font-weight: 700; letter-spacing: .04em;
+  }
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--ink); color: #fff; padding: 12px 20px; border-radius: 8px;
+    box-shadow: var(--shadow-lg); font-size: 14px; z-index: 200;
+    opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+
+</style>
+</head>
+<body>
+
+<div class="topbanner">
+  <span class="new-pill">NEW</span>
+  ClawPilot Hub v1 — built for Microsoft MCAPS Israel · all skills work with ClawPilot, Claude Code, Cursor &amp; Copilot.
+</div>
+
+<header>
+  <nav class="nav">
+    <a href="#" class="brand">
+      <img src="assets/clawpilot-logo.jpg" alt="ClawPilot logo" />
+      <div>
+        ClawPilot Hub
+        <small>Microsoft MCAPS Israel</small>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#skills" class="active">Skills</a>
+      <a href="#bundles">Bundles</a>
+      <a href="#mcp">MCP</a>
+      <a href="#guides">Guides</a>
+      <a href="#stats">Stats</a>
+      <a href="#about">About</a>
+    </div>
+    <div class="nav-actions">
+      <button class="lang-toggle">עב / EN</button>
+      <a class="btn btn-ghost" href="#" id="submitBtn" data-open-submit>Submit a skill</a>
+      <a id="loginLink" href="/login" class="btn btn-primary"><svg width="14" height="14" viewBox="0 0 21 21" style="vertical-align:-2px;margin-right:6px;"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg>Sign in with Microsoft</a>
+      <span id="userBox" style="display:none;align-items:center;gap:10px;">
+        <span id="userName" style="font-size:13px;color:var(--ink-2);font-weight:600;"></span>
+        <a id="adminLink" href="/admin/" class="btn btn-ghost" style="display:none;">Admin</a>
+        <a href="/logout" class="btn btn-ghost">Sign out</a>
+      </span>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <span class="pill">171 skills · curated for Microsoft MCAPS Israel</span>
+    <h1>The AI skills hub <br/> <span class="accent">MCAPS Israel</span> was missing.</h1>
+    <p class="lede">Curated, security-vetted AI agent skills built for ClawPilot — also compatible with Claude Code, Cursor &amp; GitHub Copilot. Hebrew-ready. Open source. Made by Microsoft Israel.</p>
+    <div class="hero-cta">
+      <a href="#skills" class="btn btn-primary">Browse skills →</a>
+      <a href="#submit" class="btn btn-ghost" data-open-submit>Submit a skill</a>
+    </div>
+    <div class="hero-meta">
+      <div><strong id="m-skills">171</strong> Skills</div>
+      <div><strong id="m-cats">12</strong> Categories</div>
+      <div><strong>4</strong> Compatible agents</div>
+      <div><strong>100%</strong> Open source</div>
+    </div>
+  </div>
+</section>
+
+<main>
+  <section style="margin-bottom: 36px;">
+    <div class="section-head">
+      <div>
+        <h2>Browse by category</h2>
+        <p>Categories built around how MCAPS Israel actually sells, designs and builds.</p>
+      </div>
+    </div>
+    <div class="cat-strip" id="catStrip"></div>
+  </section>
+
+  <section id="skills">
+    <div class="section-head">
+      <div>
+        <h2>All skills</h2>
+        <p>Hebrew-ready, security-vetted. Tested with ClawPilot. Apache-2.0.</p>
+      </div>
+    </div>
+
+    <div class="layout">
+      <aside class="filters">
+        <h3>Search</h3>
+        <div class="search-box">
+          <span>🔎</span>
+          <input id="searchInput" type="search" placeholder="Search skills..." />
+        </div>
+        <h3>Filter by category</h3>
+        <ul id="catList"></ul>
+      </aside>
+
+      <div>
+        <div class="toolbar">
+          <div class="count" id="resultsCount">— skills</div>
+          <select id="sortSel">
+            <option value="popular">Sort: Popular</option>
+            <option value="trending">Sort: Trending</option>
+            <option value="name">Sort: A–Z</option>
+            <option value="version">Sort: Latest</option>
+          </select>
+        </div>
+        <div class="grid" id="grid"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Submit Skill Modal -->
+<div class="modal-bg" id="submitModal" role="dialog" aria-modal="true" aria-labelledby="submitTitle">
+  <div class="modal">
+    <header>
+      <h3 id="submitTitle">Submit a skill</h3>
+      <button class="close" data-close-submit aria-label="Close">×</button>
+    </header>
+    <div class="body">
+      <p style="margin:0;color:var(--muted);font-size:13.5px;">
+        Drop a <code>SKILL.md</code> file (or paste its contents) and we'll extract the metadata.
+        Your skill is added to <strong>your local catalog</strong> instantly so you can preview it.
+        Submit to the public hub via GitHub when you're ready.
+      </p>
+
+      <div>
+        <label>SKILL.md</label>
+        <div class="drop" id="dropZone">
+          <strong>Drop a SKILL.md file here</strong><br/>
+          <small>or click to choose · <span style="color:var(--ms-blue);">paste content below</span></small>
+          <input type="file" id="fileInput" accept=".md,text/markdown,text/plain" hidden />
+        </div>
+      </div>
+
+      <div>
+        <label>Or paste SKILL.md content</label>
+        <textarea id="skillText" placeholder="---&#10;name: my-skill&#10;description: What this skill does&#10;---&#10;&#10;# My Skill..."></textarea>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Skill name</label>
+          <input id="f_name" type="text" placeholder="My Skill" />
+        </div>
+        <div>
+          <label>Version</label>
+          <input id="f_version" type="text" placeholder="1.0.0" value="1.0.0" />
+        </div>
+      </div>
+
+      <div>
+        <label>Description</label>
+        <input id="f_desc" type="text" placeholder="One line about what it does" />
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Category</label>
+          <select id="f_cat">
+            <option>AI &amp; Agents</option>
+            <option>Microsoft Fabric</option>
+            <option>Azure</option>
+            <option>Sales &amp; Demos</option>
+            <option>Content &amp; Localization</option>
+            <option>Security</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div>
+          <label>Author</label>
+          <input id="f_author" type="text" placeholder="Your name" />
+        </div>
+      </div>
+
+      <div>
+        <label>Tags (comma separated)</label>
+        <input id="f_tags" type="text" placeholder="Azure, RAG, Agents" />
+      </div>
+    </div>
+    <div class="actions">
+      <span class="left">Stored locally in your browser. Never leaves the device until you click "Submit to public hub".</span>
+      <div class="right">
+        <button class="btn btn-ghost" data-close-submit>Cancel</button>
+        <button class="btn btn-ghost" id="saveLocalBtn">Save to my catalog</button>
+        <button class="btn btn-primary" id="submitGhBtn">Submit to public hub →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer>
+  <div class="foot">
+    <div>
+      <div class="brand-foot">
+        <img src="assets/clawpilot-logo.jpg" alt="ClawPilot logo" />
+        <div>
+          <strong>ClawPilot Hub</strong>
+          <div><small>The AI skills MCAPS Israel was missing. Open source, security-vetted.</small></div>
+        </div>
+      </div>
+      <small>Made with care by Microsoft MCAPS Israel · MIT licensed</small>
+    </div>
+    <div>
+      <h4>Product</h4>
+      <ul>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#mcp">MCP servers</a></li>
+        <li><a href="#bundles">Bundles</a></li>
+        <li><a href="#stats">Stats</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Developers</h4>
+      <ul>
+        <li><a href="#guides">Guides</a></li>
+        <li><a href="#submit">Create a skill</a></li>
+        <li><a href="#">GitHub</a></li>
+        <li><a href="#">Changelog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Community</h4>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Privacy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="copy">
+    <span>© 2026 Microsoft MCAPS Israel · ClawPilot Hub v1.0.0</span>
+    <span>Open source under MIT</span>
+  </div>
+</footer>
+
+<script>
+const COLOR_BY_CAT = {
+  "Microsoft Fabric": "c1",
+  "Azure": "c2",
+  "AI & Agents": "c3",
+  "Sales & Demos": "c4",
+  "Content & Localization": "c5",
+  "Security": "c1"
+};
+
+const ICON_BY_CAT = {
+  "Microsoft Fabric": "🧩",
+  "Azure": "☁️",
+  "AI & Agents": "🤖",
+  "Sales & Demos": "🎤",
+  "Content & Localization": "📝",
+  "Security": "🛡️"
+};
+
+// ---------- Auth (Azure SWA easy-auth) ----------
+async function refreshAuth() {
+  try {
+    const res = await fetch("/.auth/me");
+    if (!res.ok) return null;
+    const data = await res.json();
+    const cp = data && (data.clientPrincipal || (Array.isArray(data) && data[0]));
+    if (cp && cp.userId) {
+      document.getElementById("loginLink").style.display = "none";
+      const box = document.getElementById("userBox");
+      box.style.display = "inline-flex";
+      document.getElementById("userName").textContent = cp.userDetails || cp.userId;
+      if ((cp.userRoles || []).includes("admin")) {
+        document.getElementById("adminLink").style.display = "inline-flex";
+      }
+      return cp;
+    }
+  } catch (e) { /* ignore - probably running locally without SWA emulator */ }
+  return null;
+}
+let currentUser = null;
+refreshAuth().then(u => { currentUser = u; });
+
+let allSkills = [];
+let builtinSkills = [];
+let localSkills = [];
+const LOCAL_KEY = "clawpilot-hub.local-skills.v1";
+const GH_REPO = "openclaw/clawpilot-hub";
+
+function loadLocal() {
+  try { localSkills = JSON.parse(localStorage.getItem(LOCAL_KEY) || "[]"); }
+  catch(e) { localSkills = []; }
+}
+function saveLocal() {
+  localStorage.setItem(LOCAL_KEY, JSON.stringify(localSkills));
+}
+function mergeAll() {
+  allSkills = [...localSkills, ...builtinSkills];
+}
+let activeCategory = null;
+let activeQuery = "";
+let activeSort = "popular";
+
+async function loadSkills() {
+  const res = await fetch("data/skills.json");
+  builtinSkills = await res.json();
+  loadLocal();
+  mergeAll();
+  renderCategoryStrip();
+  renderCategoryFilter();
+  renderGrid();
+  document.getElementById("m-skills").textContent = allSkills.length;
+  document.getElementById("m-cats").textContent = new Set(allSkills.map(s => s.category)).size;
+}
+
+function renderCategoryStrip() {
+  const counts = {};
+  allSkills.forEach(s => counts[s.category] = (counts[s.category] || 0) + 1);
+  const cats = Object.entries(counts).slice(0, 8);
+  const el = document.getElementById("catStrip");
+  el.innerHTML = cats.map(([cat, n]) => `
+    <div class="cat-card" data-cat="${cat}">
+      <div class="icon ${COLOR_BY_CAT[cat]||'c1'}">${ICON_BY_CAT[cat]||"⭐"}</div>
+      <div class="name">${cat}</div>
+      <div class="count">${n} skill${n>1?'s':''}</div>
+    </div>
+  `).join("");
+  el.querySelectorAll(".cat-card").forEach(card => {
+    card.addEventListener("click", () => {
+      activeCategory = card.dataset.cat === activeCategory ? null : card.dataset.cat;
+      renderCategoryFilter(); renderGrid();
+      document.getElementById("skills").scrollIntoView({behavior:"smooth"});
+    });
+  });
+}
+
+function renderCategoryFilter() {
+  const counts = {};
+  allSkills.forEach(s => counts[s.category] = (counts[s.category] || 0) + 1);
+  const cats = Object.entries(counts).sort((a,b) => b[1]-a[1]);
+  const el = document.getElementById("catList");
+  el.innerHTML = `
+    <li class="cat ${activeCategory===null?'active':''}" data-cat="">All categories <span class="count">${allSkills.length}</span></li>
+  ` + cats.map(([cat, n]) => `
+    <li class="cat ${activeCategory===cat?'active':''}" data-cat="${cat}">${cat} <span class="count">${n}</span></li>
+  `).join("");
+  el.querySelectorAll(".cat").forEach(li => {
+    li.addEventListener("click", () => {
+      activeCategory = li.dataset.cat || null;
+      renderCategoryFilter(); renderGrid();
+    });
+  });
+}
+
+function filterAndSort() {
+  let list = allSkills.slice();
+  if (activeCategory) list = list.filter(s => s.category === activeCategory);
+  if (activeQuery) {
+    const q = activeQuery.toLowerCase();
+    list = list.filter(s =>
+      s.name.toLowerCase().includes(q) ||
+      s.description.toLowerCase().includes(q) ||
+      s.tags.join(" ").toLowerCase().includes(q));
+  }
+  if (activeSort === "popular") list.sort((a,b) => (b.popular?1:0) - (a.popular?1:0));
+  if (activeSort === "trending") list.sort((a,b) => (b.trending?1:0) - (a.trending?1:0));
+  if (activeSort === "name") list.sort((a,b) => a.name.localeCompare(b.name));
+  if (activeSort === "version") list.sort((a,b) => b.version.localeCompare(a.version));
+  return list;
+}
+
+function renderGrid() {
+  const list = filterAndSort();
+  const grid = document.getElementById("grid");
+  document.getElementById("resultsCount").textContent = `${list.length} skill${list.length===1?'':'s'} found`;
+  if (list.length === 0) {
+    grid.innerHTML = `<div class="empty">No skills match your filter.</div>`;
+    return;
+  }
+  grid.innerHTML = list.map(s => `
+    <div class="card">
+      <div class="row1">
+        <h3>${escapeHtml(s.name)} ${s.local ? '<span class="badge-yours" title="Saved in your browser">YOURS</span>' : ''}</h3>
+        ${s.verified ? '<span class="verified">Verified</span>' : ''}
+      </div>
+      <div class="meta">
+        <span>by ${escapeHtml(s.author)}</span>
+        <span class="ver">v${escapeHtml(s.version)}</span>
+        ${s.popular ? '<span class="pop">★ Popular</span>' : ''}
+        ${s.trending ? '<span class="trending">↗ Trending</span>' : ''}
+      </div>
+      <div class="desc">${escapeHtml(s.description)}</div>
+      <div class="compat">
+        ${(s.compatible||[]).map(c => `<span class="chip ${c==='ClawPilot'?'pilot':''}">${escapeHtml(c)}</span>`).join("")}
+      </div>
+      <div class="ask">💬 Ask the Skill</div>
+    </div>
+  `).join("");
+}
+
+function escapeHtml(s) {
+  return String(s||"").replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  }[c]));
+}
+
+// ---------- Submit modal ----------
+function openSubmit() { document.getElementById("submitModal").classList.add("open"); }
+function closeSubmit() { document.getElementById("submitModal").classList.remove("open"); }
+document.querySelectorAll("[data-open-submit]").forEach(el => el.addEventListener("click", e => { e.preventDefault(); openSubmit(); }));
+document.querySelectorAll("[data-close-submit]").forEach(el => el.addEventListener("click", closeSubmit));
+document.getElementById("submitModal").addEventListener("click", e => { if (e.target.id === "submitModal") closeSubmit(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeSubmit(); });
+
+function parseSkillMd(text) {
+  // Extract YAML frontmatter (--- ... ---)
+  const out = { name: "", description: "", tags: [] };
+  const m = text.match(/^---\s*\n([\s\S]*?)\n---/);
+  if (m) {
+    m[1].split(/\n/).forEach(line => {
+      const kv = line.match(/^([a-zA-Z_-]+)\s*:\s*(.+)$/);
+      if (!kv) return;
+      const k = kv[1].toLowerCase().trim();
+      let v = kv[2].trim().replace(/^["'](.*)["']$/, "$1");
+      if (k === "name") out.name = v;
+      else if (k === "description") out.description = v;
+      else if (k === "category") out.category = v;
+      else if (k === "version") out.version = v;
+      else if (k === "author") out.author = v;
+      else if (k === "tags") out.tags = v.split(/[,\[\]]/).map(x => x.trim()).filter(Boolean);
+    });
+  }
+  // If no name, try first H1
+  if (!out.name) {
+    const h1 = text.match(/^#\s+(.+)$/m);
+    if (h1) out.name = h1[1].trim();
+  }
+  return out;
+}
+
+function populateForm(parsed) {
+  if (parsed.name) document.getElementById("f_name").value = parsed.name;
+  if (parsed.description) document.getElementById("f_desc").value = parsed.description;
+  if (parsed.version) document.getElementById("f_version").value = parsed.version;
+  if (parsed.author) document.getElementById("f_author").value = parsed.author;
+  if (parsed.tags && parsed.tags.length) document.getElementById("f_tags").value = parsed.tags.join(", ");
+  if (parsed.category) {
+    const sel = document.getElementById("f_cat");
+    [...sel.options].forEach(o => { if (o.text.toLowerCase() === parsed.category.toLowerCase()) sel.value = o.value; });
+  }
+}
+
+const dropZone = document.getElementById("dropZone");
+const fileInput = document.getElementById("fileInput");
+const skillText = document.getElementById("skillText");
+
+dropZone.addEventListener("click", () => fileInput.click());
+dropZone.addEventListener("dragover", e => { e.preventDefault(); dropZone.classList.add("over"); });
+dropZone.addEventListener("dragleave", () => dropZone.classList.remove("over"));
+dropZone.addEventListener("drop", e => {
+  e.preventDefault(); dropZone.classList.remove("over");
+  const f = e.dataTransfer.files[0]; if (f) loadFile(f);
+});
+fileInput.addEventListener("change", e => { const f = e.target.files[0]; if (f) loadFile(f); });
+skillText.addEventListener("input", () => populateForm(parseSkillMd(skillText.value)));
+
+function loadFile(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    skillText.value = e.target.result;
+    populateForm(parseSkillMd(e.target.result));
+  };
+  reader.readAsText(file);
+}
+
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2400);
+}
+
+function collectForm() {
+  const name = document.getElementById("f_name").value.trim();
+  if (!name) { toast("Skill name is required"); return null; }
+  const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+  return {
+    slug,
+    name,
+    description: document.getElementById("f_desc").value.trim() || "(no description)",
+    category: document.getElementById("f_cat").value,
+    version: document.getElementById("f_version").value.trim() || "1.0.0",
+    author: document.getElementById("f_author").value.trim() || "Community",
+    tags: document.getElementById("f_tags").value.split(",").map(x => x.trim()).filter(Boolean),
+    compatible: ["ClawPilot", "Claude Code"],
+    verified: false, popular: false, trending: false,
+    local: true,
+    skillMd: skillText.value || ""
+  };
+}
+
+document.getElementById("saveLocalBtn").addEventListener("click", () => {
+  const skill = collectForm(); if (!skill) return;
+  const idx = localSkills.findIndex(s => s.slug === skill.slug);
+  if (idx >= 0) localSkills[idx] = skill; else localSkills.unshift(skill);
+  saveLocal();
+  mergeAll(); renderCategoryStrip(); renderCategoryFilter(); renderGrid();
+  document.getElementById("m-skills").textContent = allSkills.length;
+  closeSubmit();
+  toast("Saved to your catalog. Visible only to you.");
+});
+
+document.getElementById("submitGhBtn").addEventListener("click", async () => {
+  const skill = collectForm(); if (!skill) return;
+  // Save locally first (always)
+  const idx = localSkills.findIndex(s => s.slug === skill.slug);
+  if (idx >= 0) localSkills[idx] = skill; else localSkills.unshift(skill);
+  saveLocal(); mergeAll(); renderGrid();
+
+  // If signed in via SWA AAD, submit through the API → opens a GitHub issue server-side
+  if (currentUser) {
+    try {
+      const res = await fetch("/api/skills-submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: skill.name, description: skill.description, category: skill.category,
+          version: skill.version, author: skill.author, tags: skill.tags,
+          compatible: skill.compatible, skillMd: skill.skillMd
+        })
+      });
+      const j = await res.json();
+      if (res.ok && j.ok) {
+        closeSubmit();
+        toast("Submitted! Awaiting Roey's review.");
+        return;
+      }
+      toast("Submit failed: " + (j.error || res.status));
+    } catch (e) {
+      toast("Submit failed: " + e.message);
+    }
+    return;
+  }
+
+  // Not signed in → fallback to opening a prefilled GitHub issue
+  const body = [
+    "## Skill submission (anonymous - via Hub)",
+    "",
+    `- **Name:** ${skill.name}`,
+    `- **Slug:** \`${skill.slug}\``,
+    `- **Category:** ${skill.category}`,
+    `- **Version:** ${skill.version}`,
+    `- **Author:** ${skill.author}`,
+    `- **Tags:** ${skill.tags.join(", ") || "(none)"}`,
+    `- **Compatible with:** ${skill.compatible.join(", ")}`,
+    "",
+    `### Description`,
+    skill.description,
+    "",
+    `### SKILL.md`,
+    "```markdown",
+    skill.skillMd || "(paste your SKILL.md here)",
+    "```"
+  ].join("\n");
+  const url = `https://github.com/${GH_REPO}/issues/new?title=${encodeURIComponent("[skill] " + skill.name)}&labels=skill-submission&body=${encodeURIComponent(body)}`;
+  window.open(url, "_blank", "noopener");
+  closeSubmit();
+  toast("Sign in for one-click submit, or finish the GitHub issue we just opened.");
+});
+
+document.getElementById("searchInput").addEventListener("input", e => { activeQuery = e.target.value; renderGrid(); });
+document.getElementById("sortSel").addEventListener("change", e => { activeSort = e.target.value; renderGrid(); });
+
+loadSkills();
+</script>
+</body>
+</html>

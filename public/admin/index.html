@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ClawPilot Hub · Admin Review</title>
+<link rel="icon" href="/assets/clawpilot-logo.jpg" />
+<style>
+  :root {
+    --ms-blue: #0078D4; --ms-blue-dark: #005A9E;
+    --ink: #1B1B1F; --ink-2: #3B3B41; --muted: #605E5C;
+    --line: #EDEBE9; --bg: #FAF9F8; --bg-2: #F3F2F1;
+    --green: #107C10; --red: #D13438; --yellow: #FFB900;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  body {
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: var(--bg); color: var(--ink); min-height: 100vh;
+  }
+  header {
+    background: #fff; border-bottom: 1px solid var(--line); padding: 14px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  header .brand { display: flex; align-items: center; gap: 12px; }
+  header img { width: 32px; height: 32px; border-radius: 6px; }
+  header h1 { margin: 0; font-size: 18px; }
+  header .small { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  header .right { display: flex; align-items: center; gap: 12px; font-size: 13px; }
+  header .right a { color: var(--ms-blue); text-decoration: none; font-weight: 600; }
+  main { max-width: 1100px; margin: 0 auto; padding: 32px 28px 80px; }
+  .stats {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;
+  }
+  .stat {
+    background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 18px;
+  }
+  .stat .v { font-size: 28px; font-weight: 700; color: var(--ink); }
+  .stat .l { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin-top: 4px; }
+  h2 { font-size: 16px; margin: 28px 0 14px; }
+  .empty {
+    background: #fff; border: 1px dashed var(--line); border-radius: 10px;
+    padding: 40px; text-align: center; color: var(--muted);
+  }
+  .item {
+    background: #fff; border: 1px solid var(--line); border-radius: 10px;
+    padding: 18px 22px; margin-bottom: 12px;
+    display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;
+  }
+  .item .title { font-weight: 600; font-size: 15px; color: var(--ink); }
+  .item .sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .item .sub a { color: var(--ms-blue); text-decoration: none; }
+  .actions { display: flex; gap: 8px; }
+  button {
+    border: 0; padding: 8px 14px; border-radius: 6px; cursor: pointer;
+    font-size: 13px; font-weight: 600; font-family: inherit;
+  }
+  .btn-approve { background: var(--green); color: #fff; }
+  .btn-approve:hover { background: #0e6e0e; }
+  .btn-reject { background: #fff; color: var(--red); border: 1px solid var(--red); }
+  .btn-reject:hover { background: #fdf3f3; }
+  .btn-view { background: #fff; color: var(--ink-2); border: 1px solid var(--line); }
+  .btn-view:hover { background: var(--bg-2); }
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--ink); color: #fff; padding: 10px 18px; border-radius: 6px;
+    opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
+    font-size: 13px;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+  .gate {
+    margin: 80px auto; max-width: 480px; text-align: center;
+    background: #fff; padding: 40px; border-radius: 10px; border: 1px solid var(--line);
+  }
+  .gate h2 { font-size: 22px; margin: 0 0 12px; }
+  .gate p { color: var(--muted); }
+  .gate a { color: var(--ms-blue); text-decoration: none; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <img src="/assets/clawpilot-logo.jpg" alt="ClawPilot" />
+    <div>
+      <h1>Admin · Skill Review Queue</h1>
+      <div class="small">ClawPilot Hub · Microsoft MCAPS Israel</div>
+    </div>
+  </div>
+  <div class="right">
+    <span id="who"></span>
+    <a href="/">← Back to hub</a>
+    <a href="/logout">Sign out</a>
+  </div>
+</header>
+
+<main>
+  <div id="gate" class="gate" style="display:none;">
+    <h2>Admin only</h2>
+    <p>You're signed in but don't have the <code>admin</code> role. If this is wrong, ask Roey to add you.</p>
+    <p><a href="/">Go back home</a></p>
+  </div>
+
+  <div id="dashboard" style="display:none;">
+    <div class="stats">
+      <div class="stat"><div class="v" id="s-pending">–</div><div class="l">Pending review</div></div>
+      <div class="stat"><div class="v" id="s-today">–</div><div class="l">Submitted today</div></div>
+      <div class="stat"><div class="v" id="s-total">–</div><div class="l">Total approved</div></div>
+    </div>
+
+    <h2>Pending submissions</h2>
+    <div id="list"></div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const toast = (msg) => {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2400);
+};
+
+(async () => {
+  // SWA easy-auth
+  let cp = null;
+  try {
+    const res = await fetch("/.auth/me");
+    if (res.ok) {
+      const d = await res.json();
+      cp = d.clientPrincipal || (Array.isArray(d) && d[0]) || null;
+    }
+  } catch (e) {}
+  if (!cp) { window.location.href = "/login"; return; }
+  if (!(cp.userRoles || []).includes("admin")) {
+    document.getElementById("gate").style.display = "block";
+    document.getElementById("who").textContent = cp.userDetails || cp.userId;
+    return;
+  }
+  document.getElementById("dashboard").style.display = "block";
+  document.getElementById("who").textContent = cp.userDetails;
+
+  // Load pending submissions
+  const r = await fetch("/api/skills-list?include=pending");
+  if (!r.ok) {
+    document.getElementById("list").innerHTML = `<div class="empty">Failed to load: ${r.status}</div>`;
+    return;
+  }
+  const data = await r.json();
+  const items = data.pending || [];
+  document.getElementById("s-pending").textContent = items.length;
+  const today = new Date().toISOString().slice(0, 10);
+  document.getElementById("s-today").textContent = items.filter(i => (i.createdAt || "").startsWith(today)).length;
+
+  // Load total approved from data/skills.json
+  try {
+    const a = await fetch("/data/skills.json");
+    if (a.ok) {
+      const arr = await a.json();
+      document.getElementById("s-total").textContent = arr.length;
+    }
+  } catch (e) {}
+
+  if (items.length === 0) {
+    document.getElementById("list").innerHTML = '<div class="empty">No pending submissions. 🎉</div>';
+    return;
+  }
+
+  document.getElementById("list").innerHTML = items.map(i => `
+    <div class="item" data-issue="${i.number}">
+      <div>
+        <div class="title">${escapeHtml(i.title)}</div>
+        <div class="sub">
+          by ${escapeHtml(i.submitter)} · ${new Date(i.createdAt).toLocaleString()}
+          · <a href="${i.url}" target="_blank" rel="noopener">View on GitHub →</a>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn-view" data-action="view">View</button>
+        <button class="btn-reject" data-action="reject">Reject</button>
+        <button class="btn-approve" data-action="approve">Approve</button>
+      </div>
+    </div>
+  `).join("");
+
+  document.getElementById("list").addEventListener("click", async (e) => {
+    const btn = e.target.closest("button"); if (!btn) return;
+    const item = btn.closest(".item");
+    const issueNumber = +item.dataset.issue;
+    const action = btn.dataset.action;
+    if (action === "view") {
+      window.open(items.find(x => x.number === issueNumber).url, "_blank", "noopener");
+      return;
+    }
+    let comment = "";
+    if (action === "reject") {
+      comment = prompt("Rejection reason (optional):") || "";
+    } else {
+      if (!confirm("Approve this skill?")) return;
+    }
+    btn.disabled = true; btn.textContent = "...";
+    try {
+      const r = await fetch("/api/skills-approve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ issueNumber, action, comment })
+      });
+      const j = await r.json();
+      if (r.ok && j.ok) {
+        item.style.opacity = ".4";
+        toast(action === "approve" ? "Approved." : "Rejected.");
+      } else {
+        toast("Failed: " + (j.error || r.status));
+        btn.disabled = false;
+      }
+    } catch (e) {
+      toast("Failed: " + e.message);
+      btn.disabled = false;
+    }
+  });
+})();
+
+function escapeHtml(s) {
+  return String(s||"").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+}
+</script>
+</body>
+</html>
