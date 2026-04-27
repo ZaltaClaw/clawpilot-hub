@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>ClawPilot Hub — Microsoft MCAPS Israel · AI Skills</title>
 <meta name="description" content="Curated AI agent skills for Microsoft MCAPS Israel. Built for ClawPilot, also works with Claude Code, Cursor and GitHub Copilot." />
+<meta name="theme-color" content="#1B1B1F" />
 <link rel="icon" href="assets/clawpilot-logo.jpg" />
 <style>
   :root {
@@ -23,6 +24,14 @@
     --bg: #FAF9F8;
     --bg-2: #F3F2F1;
     --surface: #ffffff;
+    --cream: #fdf6e8;
+    --cream-dim: rgba(253,246,232,0.7);
+    --cream-border: rgba(253,246,232,0.45);
+    --gold: #C8A96E;
+    --gold-dim: rgba(200,169,110,0.35);
+    --dark: #1B1B1F;
+    --dark-2: #252529;
+    --dark-surface: #2A2A2F;
     --radius: 8px;
     --radius-lg: 14px;
     --shadow-sm: 0 1px 2px rgba(0,0,0,.04), 0 0 1px rgba(0,0,0,.06);
@@ -32,6 +41,7 @@
     --font-display: "Segoe UI Variable Display", "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   }
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   html, body { margin: 0; padding: 0; }
   body {
     font-family: var(--font-ui);
@@ -61,11 +71,11 @@
 
   /* ---------- Header ---------- */
   header {
-    background: #fff;
-    border-bottom: 1px solid var(--line);
-    position: sticky; top: 0; z-index: 30;
-    backdrop-filter: saturate(140%) blur(8px);
     background: rgba(255,255,255,.92);
+    border-bottom: 1px solid var(--line);
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: saturate(140%) blur(8px);
+    -webkit-backdrop-filter: saturate(140%) blur(8px);
   }
   .nav {
     max-width: 1280px; margin: 0 auto; padding: 12px 24px;
@@ -101,56 +111,448 @@
     font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; background: #fff;
   }
 
-  /* ---------- Hero ---------- */
+  @media (max-width: 760px) {
+    .nav { flex-wrap: wrap; gap: 10px 12px; padding: 10px 16px; }
+    .brand { flex: 1 1 190px; }
+    .nav-links {
+      order: 3; width: 100%; margin-left: 0; overflow-x: auto;
+      padding-bottom: 2px; scrollbar-width: thin;
+    }
+    .nav-actions { margin-left: auto; flex-wrap: wrap; justify-content: flex-end; }
+    .nav-actions .btn { padding: 7px 10px; font-size: 13px; }
+  }
+
+  /* ---------- Hero (Clawstin-inspired) ---------- */
   .hero {
     position: relative;
-    background:
-      radial-gradient(1200px 500px at 12% -10%, rgba(0,120,212,.10), transparent 60%),
-      radial-gradient(900px 400px at 90% 0%, rgba(127,186,0,.10), transparent 60%),
-      linear-gradient(180deg, #fff 0%, var(--bg) 100%);
-    padding: 72px 24px 56px;
-    border-bottom: 1px solid var(--line);
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
     overflow: hidden;
+    color: var(--cream);
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 2.5rem; left: 2.5rem; right: 2.5rem; bottom: 2.5rem;
+    border: 1.5px solid var(--cream-border);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    top: calc(2.5rem + 6px); left: calc(2.5rem + 6px);
+    right: calc(2.5rem + 6px); bottom: calc(2.5rem + 6px);
+    border: 0.5px solid rgba(253, 246, 232, 0.6);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .hero-bg-video {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: center; z-index: 0;
+    pointer-events: none;
+    filter: saturate(1.05) contrast(1.02) brightness(0.85);
+  }
+  .hero-vignette {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background:
+      radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 75%, rgba(0,0,0,0.6) 100%);
   }
   .hero-inner {
-    max-width: 1100px; margin: 0 auto; text-align: center;
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
   }
-  .hero .pill {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: #fff; border: 1px solid var(--line-2);
-    padding: 6px 14px; border-radius: 999px; font-size: 13px;
-    color: var(--ms-blue); font-weight: 600; box-shadow: var(--shadow-sm);
-  }
-  .hero .pill::before {
-    content: ""; width: 8px; height: 8px; border-radius: 50%;
-    background: var(--ms-green); box-shadow: 0 0 0 4px rgba(127,186,0,.18);
+  .hero-pill {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cream);
+    opacity: 0.75;
+    font-weight: 600;
+    padding: 6px 14px;
+    border: 1px solid var(--cream-border);
+    border-radius: 999px;
+    background: rgba(0,0,0,0.15);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
   .hero h1 {
     font-family: var(--font-display);
-    font-size: clamp(40px, 6vw, 64px);
-    line-height: 1.05; margin: 24px 0 18px;
-    letter-spacing: -0.02em; font-weight: 700;
-    color: var(--ink);
+    font-size: clamp(36px, 7vw, 72px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    color: var(--cream);
+    margin: 0;
+    text-shadow: 0 4px 30px rgba(0,0,0,0.55);
   }
   .hero h1 .accent {
     background: linear-gradient(90deg, var(--ms-red), var(--ms-yellow), var(--ms-green), var(--ms-blue));
     -webkit-background-clip: text; background-clip: text; color: transparent;
     background-size: 200% 100%;
     animation: shine 8s linear infinite;
+    text-shadow: none;
   }
   @keyframes shine { 0%{background-position:0% 0;} 100%{background-position:200% 0;} }
+  .hero-ornament {
+    display: flex; align-items: center; gap: 1rem;
+    justify-content: center;
+    margin: 0.25rem 0;
+  }
+  .hero-ornament-line {
+    width: 60px; height: 0.5px;
+    background: rgba(253,246,232,0.5);
+  }
+  .hero-ornament-icon {
+    font-size: 0.7rem;
+    color: rgba(253,246,232,0.65);
+  }
   .hero p.lede {
-    font-size: 19px; color: var(--ink-2); max-width: 720px;
-    margin: 0 auto 32px;
+    font-size: clamp(15px, 1.6vw, 19px);
+    color: var(--cream-dim);
+    max-width: 640px;
+    margin: 0 auto;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.55);
+    line-height: 1.55;
   }
-  .hero-cta { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-  .hero-cta .btn-primary { padding: 12px 22px; font-size: 15px; }
-  .hero-cta .btn-ghost { padding: 12px 22px; font-size: 15px; }
+  .hero-cta {
+    display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+    margin-top: 0.5rem;
+  }
+  .hero-cta .btn-primary {
+    background: rgba(253,246,232,0.95);
+    color: var(--ink);
+    border: 1.5px solid rgba(253,246,232,0.95);
+    padding: 12px 22px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .hero-cta .btn-primary:hover { background: #fff; }
+  .hero-cta .btn-ghost {
+    background: transparent;
+    color: var(--cream);
+    border: 1.5px solid rgba(253,246,232,0.6);
+    padding: 12px 22px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .hero-cta .btn-ghost:hover { background: rgba(253,246,232,0.12); }
   .hero-meta {
-    margin-top: 36px; display: flex; gap: 32px; justify-content: center; flex-wrap: wrap;
-    color: var(--muted); font-size: 13px;
+    margin-top: 1.5rem;
+    display: flex; gap: 36px; justify-content: center; flex-wrap: wrap;
+    color: var(--cream-dim);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
   }
-  .hero-meta strong { color: var(--ink); font-weight: 700; font-size: 22px; display: block; font-family: var(--font-display); }
+  .hero-meta strong {
+    display: block;
+    color: var(--cream);
+    font-weight: 700;
+    font-size: 22px;
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+    text-transform: none;
+  }
+
+  @media (max-width: 900px) {
+    .hero { padding: 5rem 1rem 3rem; }
+    .hero::before { top: 1rem; left: 1rem; right: 1rem; bottom: 1rem; }
+    .hero::after { top: calc(1rem + 4px); left: calc(1rem + 4px); right: calc(1rem + 4px); bottom: calc(1rem + 4px); }
+    .hero-inner { gap: 1rem; padding: 0 0.5rem; }
+    .hero-pill { font-size: 10px; padding: 5px 12px; }
+    .hero h1 { font-size: clamp(30px, 8vw, 44px); }
+    .hero p.lede { font-size: 14px; line-height: 1.5; }
+    .hero-ornament-line { width: 40px; }
+    .hero-cta { gap: 10px; }
+    .hero-cta .btn-primary,
+    .hero-cta .btn-ghost { padding: 10px 18px; font-size: 13px; }
+    .hero-meta { gap: 18px; margin-top: 1rem; font-size: 10px; }
+    .hero-meta strong { font-size: 18px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero { padding: 4.5rem 0.75rem 2.5rem; }
+    .hero::before { top: 0.6rem; left: 0.6rem; right: 0.6rem; bottom: 0.6rem; }
+    .hero::after { top: calc(0.6rem + 4px); left: calc(0.6rem + 4px); right: calc(0.6rem + 4px); bottom: calc(0.6rem + 4px); }
+    .hero h1 { font-size: clamp(26px, 9vw, 36px); }
+    .hero-meta { gap: 14px; }
+    .hero-meta > div { flex: 1 1 38%; }
+  }
+
+  /* ---------- Section dividers (Clawstin ornament) ---------- */
+  .section-divider {
+    display: flex; align-items: center; justify-content: center;
+    gap: 1rem; padding: 0; margin: 0;
+  }
+  .section-divider-line {
+    flex: 1; max-width: 120px; height: 0.5px;
+  }
+  .section-divider-icon { font-size: 0.6rem; opacity: 0.5; }
+
+  /* ---------- What We Do (dark Clawstin section) ---------- */
+  .s-whatwedo {
+    background: var(--dark);
+    color: var(--cream);
+    padding: 5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .s-whatwedo::before {
+    content: "";
+    position: absolute;
+    inset: 1.5rem;
+    border: 1px solid var(--gold-dim);
+    pointer-events: none;
+  }
+  .s-whatwedo .section-divider-line { background: var(--gold-dim); }
+  .s-whatwedo .section-divider-icon { color: var(--gold); }
+  .s-whatwedo-inner {
+    max-width: 1100px; margin: 0 auto;
+    position: relative; z-index: 1;
+  }
+  .s-whatwedo .s-label {
+    display: block; text-align: center;
+    font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; margin-bottom: 0.75rem;
+  }
+  .s-whatwedo h2 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 42px);
+    text-align: center; margin: 0 0 0.5rem;
+    font-weight: 700; letter-spacing: -0.01em;
+    color: var(--cream);
+  }
+  .s-whatwedo .s-sub {
+    text-align: center; color: var(--cream-dim);
+    max-width: 600px; margin: 0 auto 2.5rem;
+    font-size: 15px; line-height: 1.55;
+  }
+  .vp-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+  .vp-card {
+    background: var(--dark-surface);
+    border: 1px solid var(--gold-dim);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.5rem;
+    display: flex; flex-direction: column; gap: 0.75rem;
+    transition: border-color .2s, transform .2s;
+  }
+  .vp-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+  }
+  .vp-card .vp-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 700;
+  }
+  .vp-card h3 {
+    font-family: var(--font-display);
+    font-size: 17px; font-weight: 700; margin: 0;
+    color: var(--cream);
+  }
+  .vp-card p {
+    margin: 0; font-size: 13.5px; line-height: 1.5;
+    color: var(--cream-dim);
+  }
+  .vp-icon-1 { background: rgba(242,80,34,0.15); color: var(--ms-red); }
+  .vp-icon-2 { background: rgba(0,120,212,0.15); color: var(--ms-blue); }
+  .vp-icon-3 { background: rgba(127,186,0,0.15); color: var(--ms-green); }
+  .vp-icon-4 { background: rgba(255,185,0,0.15); color: var(--ms-yellow); }
+
+  @media (max-width: 900px) {
+    .s-whatwedo { padding: 3.5rem 1.25rem; }
+    .s-whatwedo::before { inset: 0.75rem; }
+    .vp-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 520px) {
+    .s-whatwedo { padding: 3rem 1rem; }
+    .vp-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Agents Section (warm light) ---------- */
+  .s-agents {
+    background: linear-gradient(180deg, #FAF5EB 0%, var(--bg) 100%);
+    padding: 5rem 2rem;
+    position: relative;
+  }
+  .s-agents-inner {
+    max-width: 1100px; margin: 0 auto;
+  }
+  .s-agents .s-label {
+    display: block; text-align: center;
+    font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; margin-bottom: 0.75rem;
+  }
+  .s-agents h2 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 42px);
+    text-align: center; margin: 0 0 0.5rem;
+    font-weight: 700; letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .s-agents .s-sub {
+    text-align: center; color: var(--muted);
+    max-width: 580px; margin: 0 auto 2.5rem;
+    font-size: 15px; line-height: 1.55;
+  }
+  .s-agents .section-divider-line { background: var(--gold-dim); }
+  .s-agents .section-divider-icon { color: var(--gold); }
+  .agents-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+  .agent-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    display: flex; flex-direction: column; gap: 0.5rem;
+    transition: all .18s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .agent-card::after {
+    content: "";
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ms-red), var(--ms-yellow), var(--ms-green), var(--ms-blue));
+    opacity: 0; transition: opacity .2s;
+  }
+  .agent-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--gold);
+  }
+  .agent-card:hover::after { opacity: 1; }
+  .agent-card .agent-avatar {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 700; color: #fff;
+    flex-shrink: 0;
+  }
+  .agent-card .agent-avatar img {
+    width: 24px; height: 24px; display: block;
+  }
+  .agent-card .agent-name {
+    font-family: var(--font-display);
+    font-size: 15px; font-weight: 700; margin: 0;
+  }
+  .agent-card .agent-title {
+    font-size: 12px; color: var(--muted); margin: 0;
+    line-height: 1.35;
+  }
+  .agent-card .agent-reports {
+    font-size: 11px; color: var(--muted-2); margin: 0;
+    padding-top: 0.25rem; border-top: 1px solid var(--line);
+  }
+  .agent-card.agent-coo { border-color: var(--gold); }
+  .agent-card.agent-coo .agent-avatar { background: linear-gradient(135deg, var(--ms-red), var(--ms-yellow)); }
+
+  @media (max-width: 900px) {
+    .s-agents { padding: 3.5rem 1.25rem; }
+    .agents-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .agents-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 400px) {
+    .agents-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Live Section (dark Clawstin) ---------- */
+  .s-live {
+    background: var(--dark);
+    color: var(--cream);
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .s-live::before {
+    content: "";
+    position: absolute;
+    inset: 1.5rem;
+    border: 1px solid var(--gold-dim);
+    pointer-events: none;
+  }
+  .s-live .section-divider-line { background: var(--gold-dim); }
+  .s-live .section-divider-icon { color: var(--gold); }
+  .s-live-inner {
+    max-width: 1100px; margin: 0 auto;
+    position: relative; z-index: 1;
+  }
+  .s-live .s-label {
+    display: block; text-align: center;
+    font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; margin-bottom: 0.75rem;
+  }
+  .s-live h2 {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3.5vw, 36px);
+    text-align: center; margin: 0 0 2rem;
+    font-weight: 700; color: var(--cream);
+  }
+  .live-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  .live-widget {
+    background: var(--dark-surface);
+    border: 1px solid var(--gold-dim);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .live-widget .lw-label {
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gold); font-weight: 600;
+  }
+  .live-widget .lw-value {
+    font-family: var(--font-display);
+    font-size: 32px; font-weight: 700;
+    color: var(--cream);
+    line-height: 1.1;
+  }
+  .live-widget .lw-detail {
+    font-size: 13px; color: var(--cream-dim);
+    line-height: 1.4;
+  }
+  .live-widget .lw-status {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600;
+  }
+  .lw-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    display: inline-block;
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  .lw-dot-green { background: var(--ms-green); }
+  .lw-dot-blue { background: var(--ms-blue); }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  @media (max-width: 900px) {
+    .s-live { padding: 3rem 1.25rem; }
+    .s-live::before { inset: 0.75rem; }
+    .live-grid { grid-template-columns: 1fr; }
+  }
 
   /* ---------- Layout ---------- */
   main { max-width: 1280px; margin: 0 auto; padding: 40px 24px 80px; }
@@ -232,7 +634,7 @@
     background: rgba(127,186,0,.10); color: #517D00;
     padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600;
   }
-  .card .verified::before { content: "✓"; font-size: 11px; }
+  .card .verified::before { content: "\2713"; font-size: 11px; }
   .card .meta {
     display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
     color: var(--muted); font-size: 12px;
@@ -283,22 +685,41 @@
   .icon.c4 { background: var(--ms-yellow); color: var(--ink); }
   .icon.c5 { background: #5C2D91; }
 
-  /* ---------- Footer ---------- */
+  /* ---------- Footer (dark Clawstin) ---------- */
   footer {
-    margin-top: 80px; background: #fff; border-top: 1px solid var(--line); padding: 40px 24px;
+    margin-top: 0;
+    background: var(--dark);
+    border-top: 1px solid var(--gold-dim);
+    padding: 48px 24px 0;
+    color: var(--cream-dim);
+    position: relative;
+  }
+  footer::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--ms-red), var(--ms-yellow), var(--ms-green), var(--ms-blue));
   }
   .foot {
     max-width: 1280px; margin: 0 auto; display: grid;
     grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px;
   }
   @media (max-width: 900px) { .foot { grid-template-columns: 1fr 1fr; } }
-  .foot h4 { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 12px; }
+  @media (max-width: 480px) { .foot { grid-template-columns: 1fr; } }
+  .foot h4 { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--gold); margin: 0 0 12px; }
   .foot ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
-  .foot a { color: var(--ink-2); }
+  .foot a { color: var(--cream-dim); transition: color .15s; }
+  .foot a:hover { color: var(--cream); text-decoration: none; }
   .foot .brand-foot { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
   .foot .brand-foot img { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; }
-  .foot small { color: var(--muted); }
-  .foot .copy { max-width: 1280px; margin: 28px auto 0; padding-top: 18px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 12px; }
+  .foot .brand-foot strong { color: var(--cream); }
+  .foot small { color: var(--cream-dim); }
+  .foot .copy {
+    max-width: 1280px; margin: 28px auto 0; padding: 18px 0;
+    border-top: 1px solid var(--gold-dim);
+    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    color: var(--cream-dim); font-size: 12px; opacity: 0.7;
+  }
 
   /* ---------- Misc ---------- */
   .empty {
@@ -332,12 +753,12 @@
   .modal header .close:hover { background: var(--bg-2); }
   .modal .body { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
   .modal label { font-size: 13px; font-weight: 600; color: var(--ink-2); display: block; margin-bottom: 6px; }
-  .modal input[type=text], .modal textarea, .modal select {
+  .modal input[type=text], .modal input[type=url], .modal textarea, .modal select {
     width: 100%; border: 1px solid var(--line-2); border-radius: 8px;
     padding: 10px 12px; font-size: 14px; font-family: inherit; outline: none;
     background: #fff; color: var(--ink);
   }
-  .modal input[type=text]:focus, .modal textarea:focus, .modal select:focus {
+  .modal input[type=text]:focus, .modal input[type=url]:focus, .modal textarea:focus, .modal select:focus {
     border-color: var(--ms-blue); box-shadow: 0 0 0 3px rgba(0,120,212,.15);
   }
   .modal textarea { resize: vertical; min-height: 200px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px; line-height: 1.55; }
@@ -349,6 +770,17 @@
     background: var(--bg);
   }
   .modal .drop:hover, .modal .drop.over { border-color: var(--ms-blue); background: rgba(0,120,212,.04); color: var(--ms-blue); }
+  .modal .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 4px; }
+  .modal .tab {
+    background: transparent; border: 0; padding: 10px 16px; cursor: pointer;
+    font-family: inherit; font-size: 13.5px; font-weight: 600; color: var(--muted);
+    border-bottom: 2px solid transparent; transition: all .15s; margin-bottom: -1px;
+  }
+  .modal .tab:hover { color: var(--ink-2); }
+  .modal .tab.active { color: var(--ms-blue); border-bottom-color: var(--ms-blue); }
+  .modal .tab-pane { display: none; flex-direction: column; gap: 14px; }
+  .modal .tab-pane.active { display: flex; }
+  .modal small { color: var(--muted); }
   .modal .drop strong { color: var(--ink); }
   .modal .actions {
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
@@ -370,36 +802,44 @@
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
 
+  /* ---------- Skip link (a11y) ---------- */
+  .skip-link {
+    position: absolute; left: -9999px; top: 0;
+    background: var(--ms-blue); color: #fff;
+    padding: 8px 16px; z-index: 999;
+    font-weight: 600; font-size: 14px;
+  }
+  .skip-link:focus { left: 0; }
 </style>
 </head>
 <body>
 
-<div class="topbanner">
+<a class="skip-link" href="#skills">Skip to skills</a>
+
+<div class="topbanner" role="banner">
   <span class="new-pill">NEW</span>
   ClawPilot Hub v1 — built for Microsoft MCAPS Israel · all skills work with ClawPilot, Claude Code, Cursor &amp; Copilot.
 </div>
 
 <header>
-  <nav class="nav">
+  <nav class="nav" aria-label="Main navigation">
     <a href="#" class="brand">
-      <img src="assets/clawpilot-logo.jpg" alt="ClawPilot logo" />
+      <img src="assets/clawpilot-logo.jpg" alt="ClawPilot logo" width="38" height="38" />
       <div>
         ClawPilot Hub
         <small>Microsoft MCAPS Israel</small>
       </div>
     </a>
     <div class="nav-links">
+      <a href="#whatwedo">About</a>
       <a href="#skills" class="active">Skills</a>
-      <a href="#bundles">Bundles</a>
-      <a href="#mcp">MCP</a>
-      <a href="#guides">Guides</a>
-      <a href="#stats">Stats</a>
-      <a href="#about">About</a>
+      <a href="#agents">Compatible agents</a>
+      <a href="#live">Live</a>
     </div>
     <div class="nav-actions">
-      <button class="lang-toggle">עב / EN</button>
+      <button class="lang-toggle" aria-label="Toggle language between Hebrew and English">EN / עב</button>
       <a class="btn btn-ghost" href="#" id="submitBtn" data-open-submit>Submit a skill</a>
-      <a id="loginLink" href="/login" class="btn btn-primary"><svg width="14" height="14" viewBox="0 0 21 21" style="vertical-align:-2px;margin-right:6px;"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg>Sign in with Microsoft</a>
+      <a id="loginLink" href="/login" class="btn btn-primary"><svg width="14" height="14" viewBox="0 0 21 21" style="vertical-align:-2px;margin-right:6px;" aria-hidden="true"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg>Sign in with Microsoft</a>
       <span id="userBox" style="display:none;align-items:center;gap:10px;">
         <span id="userName" style="font-size:13px;color:var(--ink-2);font-weight:600;"></span>
         <a id="adminLink" href="/admin/" class="btn btn-ghost" style="display:none;">Admin</a>
@@ -409,25 +849,160 @@
   </nav>
 </header>
 
-<section class="hero">
+<!-- ==================== HERO ==================== -->
+<section class="hero" aria-label="Hero">
+  <video class="hero-bg-video" autoplay muted loop playsinline preload="metadata" poster="assets/hero-poster.jpg" aria-hidden="true">
+    <source src="assets/hero.webm" type="video/webm" />
+    <source src="assets/hero.mp4" type="video/mp4" />
+  </video>
+  <div class="hero-vignette" aria-hidden="true"></div>
   <div class="hero-inner">
-    <span class="pill">171 skills · curated for Microsoft MCAPS Israel</span>
+    <span class="hero-pill" id="heroPill">12 skills · curated for MCAPS Israel</span>
     <h1>The AI skills hub <br/> <span class="accent">MCAPS Israel</span> was missing.</h1>
+    <div class="hero-ornament" aria-hidden="true">
+      <div class="hero-ornament-line"></div>
+      <div class="hero-ornament-icon">&#9670;</div>
+      <div class="hero-ornament-line"></div>
+    </div>
     <p class="lede">Curated, security-vetted AI agent skills built for ClawPilot — also compatible with Claude Code, Cursor &amp; GitHub Copilot. Hebrew-ready. Open source. Made by Microsoft Israel.</p>
     <div class="hero-cta">
-      <a href="#skills" class="btn btn-primary">Browse skills →</a>
-      <a href="#submit" class="btn btn-ghost" data-open-submit>Submit a skill</a>
+      <a href="#skills" class="btn-primary">Browse skills &#8594;</a>
+      <a href="#submit" class="btn-ghost" data-open-submit>Submit a skill</a>
     </div>
     <div class="hero-meta">
-      <div><strong id="m-skills">171</strong> Skills</div>
-      <div><strong id="m-cats">12</strong> Categories</div>
+      <div><strong id="m-skills">12</strong> Skills</div>
+      <div><strong id="m-cats">6</strong> Categories</div>
       <div><strong>4</strong> Compatible agents</div>
-      <div><strong>100%</strong> Open source</div>
+      <div><strong>Apache-2.0</strong> Open source</div>
     </div>
   </div>
 </section>
 
-<main>
+<!-- ==================== WHAT WE DO ==================== -->
+<section class="s-whatwedo" id="whatwedo" aria-label="What we do">
+  <div class="s-whatwedo-inner">
+    <span class="s-label">What we do</span>
+    <h2>AI skills, purpose-built for the field</h2>
+    <p class="s-sub">Every skill is tested inside Microsoft MCAPS Israel workflows — from customer demos to production architectures. No toy prompts.</p>
+
+    <div class="section-divider" aria-hidden="true" style="margin-bottom:2.5rem;">
+      <div class="section-divider-line"></div>
+      <div class="section-divider-icon">&#9670;</div>
+      <div class="section-divider-line"></div>
+    </div>
+
+    <div class="vp-grid" role="list">
+      <div class="vp-card" role="listitem">
+        <div class="vp-icon vp-icon-1" aria-hidden="true">&#9881;</div>
+        <h3>Architect</h3>
+        <p>Generate WAF-aligned Azure and Fabric architectures with cost estimates, security checklists, and deployment templates — in minutes.</p>
+      </div>
+      <div class="vp-card" role="listitem">
+        <div class="vp-icon vp-icon-2" aria-hidden="true">&#9733;</div>
+        <h3>Sell</h3>
+        <p>Prep customer-facing demos and pitches aligned to MCAPS narratives. Talk tracks, fallback plans, and recovery moves when things break live.</p>
+      </div>
+      <div class="vp-card" role="listitem">
+        <div class="vp-icon vp-icon-3" aria-hidden="true">&#10003;</div>
+        <h3>Review</h3>
+        <p>Security reviews, cost audits, and Hebrew content QA — all aligned to Microsoft baselines (MCSB, Zero Trust, WAF).</p>
+      </div>
+      <div class="vp-card" role="listitem">
+        <div class="vp-icon vp-icon-4" aria-hidden="true">&#9883;</div>
+        <h3>Build</h3>
+        <p>Scaffold Copilot Studio agents, RAG pipelines, and multi-agent systems. From design doc to working prototype in one session.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== COMPATIBLE AGENTS ==================== -->
+<section class="s-agents" id="agents" aria-label="Compatible AI agents">
+  <div class="s-agents-inner">
+    <span class="s-label">Compatible AI agents</span>
+    <h2>Use these skills with the agent you already have</h2>
+    <p class="s-sub">Every skill on this hub is plain Markdown (<code>SKILL.md</code>). Drop it into any of these — no lock-in, no vendor magic.</p>
+
+    <div class="section-divider" aria-hidden="true" style="margin-bottom:2.5rem;">
+      <div class="section-divider-line"></div>
+      <div class="section-divider-icon">&#9670;</div>
+      <div class="section-divider-line"></div>
+    </div>
+
+    <div class="agents-grid" role="list">
+      <div class="agent-card agent-coo" role="listitem">
+        <div class="agent-avatar" style="background:linear-gradient(135deg,var(--ms-red),var(--ms-yellow));" aria-hidden="true">
+          <span style="font-size:20px;">🦞</span>
+        </div>
+        <p class="agent-name">ClawPilot</p>
+        <p class="agent-title">Native runtime</p>
+        <p class="agent-reports">Built for this hub</p>
+      </div>
+      <div class="agent-card" role="listitem">
+        <div class="agent-avatar" style="background:#D97757;" aria-hidden="true">
+          <img src="https://cdn.simpleicons.org/anthropic/ffffff" alt="" loading="lazy">
+        </div>
+        <p class="agent-name">Claude Code</p>
+        <p class="agent-title">Anthropic CLI</p>
+        <p class="agent-reports">Drop SKILL.md into <code>~/.claude/skills</code></p>
+      </div>
+      <div class="agent-card" role="listitem">
+        <div class="agent-avatar" style="background:#0A0A0A;" aria-hidden="true">
+          <img src="https://cdn.simpleicons.org/cursor/ffffff" alt="" loading="lazy">
+        </div>
+        <p class="agent-name">Cursor</p>
+        <p class="agent-title">AI-native IDE</p>
+        <p class="agent-reports">Add as <code>.cursor/rules</code> or paste in chat</p>
+      </div>
+      <div class="agent-card" role="listitem">
+        <div class="agent-avatar" style="background:#24292F;" aria-hidden="true">
+          <img src="https://cdn.simpleicons.org/githubcopilot/ffffff" alt="" loading="lazy">
+        </div>
+        <p class="agent-name">GitHub Copilot</p>
+        <p class="agent-title">Microsoft / GitHub</p>
+        <p class="agent-reports">Add as <code>.github/copilot-instructions.md</code></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== LIVE WIDGETS ==================== -->
+<section class="s-live" id="live" aria-label="Live hub stats">
+  <div class="s-live-inner">
+    <span class="s-label">Live</span>
+    <h2>Hub at a glance</h2>
+
+    <div class="section-divider" aria-hidden="true" style="margin-bottom:2rem;">
+      <div class="section-divider-line"></div>
+      <div class="section-divider-icon">&#9670;</div>
+      <div class="section-divider-line"></div>
+    </div>
+
+    <div class="live-grid" role="list">
+      <div class="live-widget" role="listitem">
+        <div class="lw-label">Skills published</div>
+        <div class="lw-value" id="lw-skills">12</div>
+        <div class="lw-detail">Curated &amp; security-vetted for MCAPS Israel</div>
+        <div class="lw-status"><span class="lw-dot lw-dot-green"></span> Accepting submissions</div>
+      </div>
+      <div class="live-widget" role="listitem">
+        <div class="lw-label">Categories</div>
+        <div class="lw-value" id="lw-cats">6</div>
+        <div class="lw-detail">Fabric &middot; Azure &middot; AI &amp; Agents &middot; Sales &middot; Content &middot; Security</div>
+        <div class="lw-status"><span class="lw-dot lw-dot-blue"></span> Growing</div>
+      </div>
+      <div class="live-widget" role="listitem">
+        <div class="lw-label">Compatible agents</div>
+        <div class="lw-value">4</div>
+        <div class="lw-detail">ClawPilot &middot; Claude Code &middot; Cursor &middot; GitHub Copilot</div>
+        <div class="lw-status"><span class="lw-dot lw-dot-green"></span> All supported</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SKILLS (existing) ==================== -->
+<main id="main-content">
   <section style="margin-bottom: 36px;">
     <div class="section-head">
       <div>
@@ -447,27 +1022,28 @@
     </div>
 
     <div class="layout">
-      <aside class="filters">
+      <aside class="filters" aria-label="Skill filters">
         <h3>Search</h3>
         <div class="search-box">
-          <span>🔎</span>
-          <input id="searchInput" type="search" placeholder="Search skills..." />
+          <span aria-hidden="true">&#128270;</span>
+          <input id="searchInput" type="search" placeholder="Search skills..." aria-label="Search skills" />
         </div>
         <h3>Filter by category</h3>
-        <ul id="catList"></ul>
+        <ul id="catList" role="listbox" aria-label="Category filter"></ul>
       </aside>
 
       <div>
         <div class="toolbar">
-          <div class="count" id="resultsCount">— skills</div>
+          <div class="count" id="resultsCount" aria-live="polite">--- skills</div>
+          <label for="sortSel" class="sr-only" style="position:absolute;left:-9999px;">Sort order</label>
           <select id="sortSel">
             <option value="popular">Sort: Popular</option>
             <option value="trending">Sort: Trending</option>
-            <option value="name">Sort: A–Z</option>
+            <option value="name">Sort: A-Z</option>
             <option value="version">Sort: Latest</option>
           </select>
         </div>
-        <div class="grid" id="grid"></div>
+        <div class="grid" id="grid" role="list"></div>
       </div>
     </div>
   </section>
@@ -478,125 +1054,192 @@
   <div class="modal">
     <header>
       <h3 id="submitTitle">Submit a skill</h3>
-      <button class="close" data-close-submit aria-label="Close">×</button>
+      <button class="close" data-close-submit aria-label="Close">&#215;</button>
     </header>
     <div class="body">
-      <p style="margin:0;color:var(--muted);font-size:13.5px;">
-        Drop a <code>SKILL.md</code> file (or paste its contents) and we'll extract the metadata.
-        Your skill is added to <strong>your local catalog</strong> instantly so you can preview it.
-        Submit to the public hub via GitHub when you're ready.
-      </p>
-
-      <div>
-        <label>SKILL.md</label>
-        <div class="drop" id="dropZone">
-          <strong>Drop a SKILL.md file here</strong><br/>
-          <small>or click to choose · <span style="color:var(--ms-blue);">paste content below</span></small>
-          <input type="file" id="fileInput" accept=".md,text/markdown,text/plain" hidden />
-        </div>
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="editor" role="tab" aria-selected="true">Editor</button>
+        <button class="tab" data-tab="github" role="tab" aria-selected="false">From GitHub</button>
+        <button class="tab" data-tab="prompt" role="tab" aria-selected="false">Ask ClawPilot</button>
       </div>
 
-      <div>
-        <label>Or paste SKILL.md content</label>
-        <textarea id="skillText" placeholder="---&#10;name: my-skill&#10;description: What this skill does&#10;---&#10;&#10;# My Skill..."></textarea>
-      </div>
+      <!-- EDITOR TAB -->
+      <div class="tab-pane active" data-pane="editor" role="tabpanel">
+        <p style="margin:0 0 14px;color:var(--muted);font-size:13.5px;">
+          Drop a <code>SKILL.md</code> and we'll extract the metadata.
+          You can also paste the content into the editor below.
+        </p>
 
-      <div class="row">
         <div>
-          <label>Skill name</label>
-          <input id="f_name" type="text" placeholder="My Skill" />
+          <label for="fileInput">SKILL.md</label>
+          <div class="drop" id="dropZone">
+            <strong>Drop SKILL.md or click to choose</strong><br/>
+            <small>For multi-file skills, use the GitHub tab so reviewers can inspect the full folder.</small>
+            <input type="file" id="fileInput" accept=".md,text/markdown,text/plain" hidden />
+          </div>
+          <div id="bundleFiles" style="display:none;margin-top:8px;font-size:12px;color:var(--muted);background:var(--bg-2);padding:10px 14px;border-radius:6px;border:1px solid var(--line);"></div>
         </div>
+
         <div>
-          <label>Version</label>
-          <input id="f_version" type="text" placeholder="1.0.0" value="1.0.0" />
+          <label for="skillText">SKILL.md content (live editor)</label>
+          <textarea id="skillText" placeholder="---&#10;name: my-skill&#10;description: What this skill does&#10;version: 1.0.0&#10;author: Your name&#10;tags: [azure, rag]&#10;---&#10;&#10;# My Skill&#10;&#10;## When to use this skill&#10;..."></textarea>
+          <div style="display:flex;gap:10px;margin-top:8px;">
+            <button class="btn btn-ghost" id="loadTemplateBtn" type="button" style="font-size:12px;padding:6px 12px;">Load template</button>
+            <button class="btn btn-ghost" id="reparseBtn" type="button" style="font-size:12px;padding:6px 12px;">Re-parse from editor</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="f_name">Skill name</label>
+            <input id="f_name" type="text" placeholder="My Skill" />
+          </div>
+          <div>
+            <label for="f_version">Version</label>
+            <input id="f_version" type="text" placeholder="1.0.0" value="1.0.0" />
+          </div>
+        </div>
+
+        <div>
+          <label for="f_desc">Description</label>
+          <input id="f_desc" type="text" placeholder="One line about what it does" />
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="f_cat">Category</label>
+            <select id="f_cat">
+              <option>AI &amp; Agents</option>
+              <option>Microsoft Fabric</option>
+              <option>Azure</option>
+              <option>Sales &amp; Demos</option>
+              <option>Content &amp; Localization</option>
+              <option>Security</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="f_author">Author</label>
+            <input id="f_author" type="text" placeholder="Your name" />
+          </div>
+        </div>
+
+        <div>
+          <label for="f_tags">Tags (comma separated)</label>
+          <input id="f_tags" type="text" placeholder="Azure, RAG, Agents" />
         </div>
       </div>
 
-      <div>
-        <label>Description</label>
-        <input id="f_desc" type="text" placeholder="One line about what it does" />
+      <!-- GITHUB TAB -->
+      <div class="tab-pane" data-pane="github" role="tabpanel">
+        <p style="margin:0 0 14px;color:var(--muted);font-size:13.5px;">
+          Paste a link to a public GitHub repo, folder, or <code>SKILL.md</code>.
+          We'll fetch <code>SKILL.md</code> + any sub-folders automatically.
+        </p>
+
+        <div>
+          <label for="f_gh_url">GitHub URL</label>
+          <input id="f_gh_url" type="url" placeholder="https://github.com/owner/repo or .../tree/main/skills/my-skill or raw SKILL.md" />
+          <small style="display:block;color:var(--muted);font-size:12px;margin-top:6px;">
+            Examples:<br/>
+            <code>https://github.com/anthropics/skills/tree/main/skills/pdf</code><br/>
+            <code>https://github.com/me/my-skill</code> (uses repo root)
+          </small>
+        </div>
+
+        <div>
+          <button class="btn btn-primary" id="fetchGhBtn" type="button">Fetch &amp; preview</button>
+        </div>
+
+        <div id="ghPreview" style="display:none;margin-top:8px;background:var(--bg-2);padding:14px 18px;border-radius:8px;border:1px solid var(--line);">
+          <div style="font-weight:600;margin-bottom:6px;" id="ghPreviewTitle"></div>
+          <div id="ghPreviewMeta" style="font-size:12px;color:var(--muted);"></div>
+          <pre id="ghPreviewBody" style="max-height:200px;overflow:auto;font-size:12px;background:#fff;padding:10px;border-radius:6px;margin-top:10px;border:1px solid var(--line);"></pre>
+        </div>
       </div>
 
-      <div class="row">
-        <div>
-          <label>Category</label>
-          <select id="f_cat">
-            <option>AI &amp; Agents</option>
-            <option>Microsoft Fabric</option>
-            <option>Azure</option>
-            <option>Sales &amp; Demos</option>
-            <option>Content &amp; Localization</option>
-            <option>Security</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div>
-          <label>Author</label>
-          <input id="f_author" type="text" placeholder="Your name" />
-        </div>
-      </div>
+      <!-- ASK CLAWPILOT TAB -->
+      <div class="tab-pane" data-pane="prompt" role="tabpanel">
+        <p style="margin:0 0 14px;color:var(--muted);font-size:13.5px;">
+          Don't have a SKILL.md ready? Copy this prompt, paste it into your
+          <strong>ClawPilot</strong> (or Claude Code / Cursor / Copilot Chat),
+          and it'll do the upload for you.
+        </p>
 
-      <div>
-        <label>Tags (comma separated)</label>
-        <input id="f_tags" type="text" placeholder="Azure, RAG, Agents" />
+        <div>
+          <label for="f_idea">What is the skill about?</label>
+          <input id="f_idea" type="text" placeholder="e.g. Microsoft Fabric notebook scaffolder for medallion architecture" />
+        </div>
+        <div>
+          <label for="f_promptAuthor">Your name (so the credit goes to you)</label>
+          <input id="f_promptAuthor" type="text" placeholder="Your name" />
+        </div>
+
+        <div>
+          <label for="agentPrompt">Generated prompt</label>
+          <textarea id="agentPrompt" readonly style="min-height:240px;font-family:'SF Mono',Menlo,monospace;font-size:12.5px;"></textarea>
+          <div style="display:flex;gap:10px;margin-top:8px;align-items:center;">
+            <button class="btn btn-primary" id="copyPromptBtn" type="button">Copy prompt</button>
+            <span id="copiedHint" style="font-size:12px;color:var(--ms-green);display:none;font-weight:600;">Copied — paste into your AI agent</span>
+          </div>
+          <small style="display:block;color:var(--muted);font-size:12px;margin-top:8px;">
+            The prompt instructs your agent to inspect its own skills, pick the right one,
+            craft a clean SKILL.md, and POST it to <code>/api/skills-submit</code> on this hub.
+          </small>
+        </div>
       </div>
     </div>
     <div class="actions">
-      <span class="left">Stored locally in your browser. Never leaves the device until you click "Submit to public hub".</span>
+      <span class="left">Stored locally in your browser. Never leaves the device until you submit.</span>
       <div class="right">
         <button class="btn btn-ghost" data-close-submit>Cancel</button>
         <button class="btn btn-ghost" id="saveLocalBtn">Save to my catalog</button>
-        <button class="btn btn-primary" id="submitGhBtn">Submit to public hub →</button>
+        <button class="btn btn-primary" id="submitGhBtn">Submit to public hub &#8594;</button>
       </div>
     </div>
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <footer>
   <div class="foot">
     <div>
       <div class="brand-foot">
-        <img src="assets/clawpilot-logo.jpg" alt="ClawPilot logo" />
+        <img src="assets/clawpilot-logo.jpg" alt="ClawPilot logo" width="40" height="40" />
         <div>
           <strong>ClawPilot Hub</strong>
           <div><small>The AI skills MCAPS Israel was missing. Open source, security-vetted.</small></div>
         </div>
       </div>
-      <small>Made with care by Microsoft MCAPS Israel · MIT licensed</small>
+      <small>Made with care by Microsoft MCAPS Israel</small>
     </div>
     <div>
       <h4>Product</h4>
       <ul>
         <li><a href="#skills">Skills</a></li>
-        <li><a href="#mcp">MCP servers</a></li>
-        <li><a href="#bundles">Bundles</a></li>
-        <li><a href="#stats">Stats</a></li>
+        <li><a href="#agents">Compatible agents</a></li>
+        <li><a href="#whatwedo">About</a></li>
       </ul>
     </div>
     <div>
       <h4>Developers</h4>
       <ul>
-        <li><a href="#guides">Guides</a></li>
-        <li><a href="#submit">Create a skill</a></li>
-        <li><a href="#">GitHub</a></li>
-        <li><a href="#">Changelog</a></li>
+        <li><a href="#" data-open-submit>Create a skill</a></li>
+        <li><a href="https://github.com/ZaltaClaw/clawpilot-hub">GitHub</a></li>
       </ul>
     </div>
     <div>
       <h4>Community</h4>
       <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">Terms</a></li>
-        <li><a href="#">Privacy</a></li>
+        <li><a href="#whatwedo">About</a></li>
+        <li><a href="mailto:zaltaclaw@gmail.com">Contact</a></li>
       </ul>
     </div>
   </div>
   <div class="copy">
-    <span>© 2026 Microsoft MCAPS Israel · ClawPilot Hub v1.0.0</span>
-    <span>Open source under MIT</span>
+    <span>&copy; 2026 Microsoft MCAPS Israel &middot; ClawPilot Hub v1.0.0</span>
+    <span>Apache-2.0</span>
   </div>
 </footer>
 
@@ -611,32 +1254,32 @@ const COLOR_BY_CAT = {
 };
 
 const ICON_BY_CAT = {
-  "Microsoft Fabric": "🧩",
-  "Azure": "☁️",
-  "AI & Agents": "🤖",
-  "Sales & Demos": "🎤",
-  "Content & Localization": "📝",
-  "Security": "🛡️"
+  "Microsoft Fabric": "\uD83E\uDDE9",
+  "Azure": "\u2601\uFE0F",
+  "AI & Agents": "\uD83E\uDD16",
+  "Sales & Demos": "\uD83C\uDFA4",
+  "Content & Localization": "\uD83D\uDCDD",
+  "Security": "\uD83D\uDEE1\uFE0F"
 };
 
-// ---------- Auth (Azure SWA easy-auth) ----------
+// ---------- Auth ----------
 async function refreshAuth() {
   try {
-    const res = await fetch("/.auth/me");
+    const res = await fetch("/api/auth/me");
     if (!res.ok) return null;
     const data = await res.json();
-    const cp = data && (data.clientPrincipal || (Array.isArray(data) && data[0]));
-    if (cp && cp.userId) {
+    if (data && data.authenticated) {
       document.getElementById("loginLink").style.display = "none";
       const box = document.getElementById("userBox");
       box.style.display = "inline-flex";
-      document.getElementById("userName").textContent = cp.userDetails || cp.userId;
-      if ((cp.userRoles || []).includes("admin")) {
-        document.getElementById("adminLink").style.display = "inline-flex";
+      document.getElementById("userName").textContent = data.name || data.email;
+      if (data.isAdmin) {
+        const a = document.getElementById("adminLink");
+        if (a) a.style.display = "inline-flex";
       }
-      return cp;
+      return data;
     }
-  } catch (e) { /* ignore - probably running locally without SWA emulator */ }
+  } catch (e) { /* not signed in */ }
   return null;
 }
 let currentUser = null;
@@ -646,7 +1289,7 @@ let allSkills = [];
 let builtinSkills = [];
 let localSkills = [];
 const LOCAL_KEY = "clawpilot-hub.local-skills.v1";
-const GH_REPO = "openclaw/clawpilot-hub";
+const GH_REPO = "ZaltaClaw/clawpilot-hub";
 
 function loadLocal() {
   try { localSkills = JSON.parse(localStorage.getItem(LOCAL_KEY) || "[]"); }
@@ -657,6 +1300,17 @@ function saveLocal() {
 }
 function mergeAll() {
   allSkills = [...localSkills, ...builtinSkills];
+}
+function updateMetrics() {
+  const categoryCount = new Set(allSkills.map(s => s.category)).size;
+  document.getElementById("m-skills").textContent = allSkills.length;
+  document.getElementById("m-cats").textContent = categoryCount;
+  document.getElementById("heroPill").textContent = allSkills.length + " skills \u00B7 curated for MCAPS Israel";
+  // Live widgets
+  const lwSkills = document.getElementById("lw-skills");
+  const lwCats = document.getElementById("lw-cats");
+  if (lwSkills) lwSkills.textContent = allSkills.length;
+  if (lwCats) lwCats.textContent = categoryCount;
 }
 let activeCategory = null;
 let activeQuery = "";
@@ -670,9 +1324,20 @@ async function loadSkills() {
   renderCategoryStrip();
   renderCategoryFilter();
   renderGrid();
-  document.getElementById("m-skills").textContent = allSkills.length;
-  document.getElementById("m-cats").textContent = new Set(allSkills.map(s => s.category)).size;
+  updateMetrics();
+  openSkillFromUrlHash();
 }
+
+function openSkillFromUrlHash() {
+  const raw = (location.hash || "").replace(/^#\/?/, "");
+  if (!raw) return;
+  const [kind, slug] = raw.split("/");
+  if (kind !== "skill" || !slug) return;
+  const skill = allSkills.find(s => s.slug === slug);
+  if (!skill) return;
+  setTimeout(() => openSkillDetail(skill), 150);
+}
+window.addEventListener("hashchange", openSkillFromUrlHash);
 
 function renderCategoryStrip() {
   const counts = {};
@@ -681,7 +1346,7 @@ function renderCategoryStrip() {
   const el = document.getElementById("catStrip");
   el.innerHTML = cats.map(([cat, n]) => `
     <div class="cat-card" data-cat="${cat}">
-      <div class="icon ${COLOR_BY_CAT[cat]||'c1'}">${ICON_BY_CAT[cat]||"⭐"}</div>
+      <div class="icon ${COLOR_BY_CAT[cat]||'c1'}">${ICON_BY_CAT[cat]||"\u2B50"}</div>
       <div class="name">${cat}</div>
       <div class="count">${n} skill${n>1?'s':''}</div>
     </div>
@@ -701,9 +1366,9 @@ function renderCategoryFilter() {
   const cats = Object.entries(counts).sort((a,b) => b[1]-a[1]);
   const el = document.getElementById("catList");
   el.innerHTML = `
-    <li class="cat ${activeCategory===null?'active':''}" data-cat="">All categories <span class="count">${allSkills.length}</span></li>
+    <li class="cat ${activeCategory===null?'active':''}" data-cat="" role="option" aria-selected="${activeCategory===null}">All categories <span class="count">${allSkills.length}</span></li>
   ` + cats.map(([cat, n]) => `
-    <li class="cat ${activeCategory===cat?'active':''}" data-cat="${cat}">${cat} <span class="count">${n}</span></li>
+    <li class="cat ${activeCategory===cat?'active':''}" data-cat="${cat}" role="option" aria-selected="${activeCategory===cat}">${cat} <span class="count">${n}</span></li>
   `).join("");
   el.querySelectorAll(".cat").forEach(li => {
     li.addEventListener("click", () => {
@@ -733,13 +1398,13 @@ function filterAndSort() {
 function renderGrid() {
   const list = filterAndSort();
   const grid = document.getElementById("grid");
-  document.getElementById("resultsCount").textContent = `${list.length} skill${list.length===1?'':'s'} found`;
+  document.getElementById("resultsCount").textContent = list.length + " skill" + (list.length===1?'':'s') + " found";
   if (list.length === 0) {
-    grid.innerHTML = `<div class="empty">No skills match your filter.</div>`;
+    grid.innerHTML = '<div class="empty">No skills match your filter.</div>';
     return;
   }
-  grid.innerHTML = list.map(s => `
-    <div class="card">
+  grid.innerHTML = list.map((s, i) => `
+    <div class="card" role="listitem" data-skill-idx="${i}" tabindex="0" style="cursor:pointer;">
       <div class="row1">
         <h3>${escapeHtml(s.name)} ${s.local ? '<span class="badge-yours" title="Saved in your browser">YOURS</span>' : ''}</h3>
         ${s.verified ? '<span class="verified">Verified</span>' : ''}
@@ -747,16 +1412,101 @@ function renderGrid() {
       <div class="meta">
         <span>by ${escapeHtml(s.author)}</span>
         <span class="ver">v${escapeHtml(s.version)}</span>
-        ${s.popular ? '<span class="pop">★ Popular</span>' : ''}
-        ${s.trending ? '<span class="trending">↗ Trending</span>' : ''}
+        ${s.popular ? '<span class="pop">Popular</span>' : ''}
+        ${s.trending ? '<span class="trending">Trending</span>' : ''}
       </div>
       <div class="desc">${escapeHtml(s.description)}</div>
       <div class="compat">
-        ${(s.compatible||[]).map(c => `<span class="chip ${c==='ClawPilot'?'pilot':''}">${escapeHtml(c)}</span>`).join("")}
+        ${(s.compatible||[]).map(c => '<span class="chip ' + (c==='ClawPilot'?'pilot':'') + '">' + escapeHtml(c) + '</span>').join("")}
       </div>
-      <div class="ask">💬 Ask the Skill</div>
+      <button class="ask" type="button" data-skill-idx="${i}">Use this skill &rarr;</button>
     </div>
   `).join("");
+  grid.querySelectorAll("[data-skill-idx]").forEach(el => {
+    el.addEventListener("click", e => {
+      e.stopPropagation();
+      const idx = parseInt(el.getAttribute("data-skill-idx"), 10);
+      openSkillDetail(list[idx]);
+    });
+    el.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        const idx = parseInt(el.getAttribute("data-skill-idx"), 10);
+        openSkillDetail(list[idx]);
+      }
+    });
+  });
+}
+
+// ---------- Skill detail modal ----------
+function skillUsagePrompt(s) {
+  return `I want to use the "${s.name}" skill from ClawPilot Hub.\n\nWhat it does: ${s.description}\nCategory: ${s.category}\nTags: ${(s.tags||[]).join(", ")}\n\nPlease:\n1. Read the SKILL.md from https://github.com/${GH_REPO}/blob/main/skills/${s.slug}/SKILL.md\n2. Follow it step by step for my current task.\n3. Ask me for any inputs the skill needs.`;
+}
+function openSkillDetail(s) {
+  if (!s) return;
+  let modal = document.getElementById("skillDetailModal");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "skillDetailModal";
+    modal.className = "modal-bg";
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-modal", "true");
+    modal.innerHTML = `
+      <div class="modal">
+        <header>
+          <h3 id="skillDetailTitle">Skill</h3>
+          <button class="close" id="skillDetailClose" aria-label="Close">&times;</button>
+        </header>
+        <div class="body" id="skillDetailBody"></div>
+      </div>`;
+    document.body.appendChild(modal);
+    modal.addEventListener("click", e => { if (e.target.id === "skillDetailModal") modal.classList.remove("open"); });
+    document.getElementById("skillDetailClose").addEventListener("click", () => modal.classList.remove("open"));
+  }
+  document.getElementById("skillDetailTitle").textContent = s.name;
+  const prompt = skillUsagePrompt(s);
+  if (s.slug) history.replaceState(null, "", `#skill/${s.slug}`);
+  const ghUrl = `https://github.com/${GH_REPO}/tree/main/skills/${s.slug}`;
+  const rawUrl = `https://raw.githubusercontent.com/${GH_REPO}/main/skills/${s.slug}/SKILL.md`;
+  document.getElementById("skillDetailBody").innerHTML = `
+    <div style="margin-bottom:14px;color:var(--muted);font-size:13.5px;">
+      <span>by ${escapeHtml(s.author)}</span> &middot;
+      <span>v${escapeHtml(s.version)}</span> &middot;
+      <span>${escapeHtml(s.category)}</span>
+    </div>
+    <p style="font-size:15px;line-height:1.55;margin:0 0 18px;">${escapeHtml(s.description)}</p>
+    <div class="compat" style="margin-bottom:18px;">
+      ${(s.compatible||[]).map(c => '<span class="chip ' + (c==='ClawPilot'?'pilot':'') + '">' + escapeHtml(c) + '</span>').join("")}
+    </div>
+    <h4 style="margin:0 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);">How to use it</h4>
+    <ol style="padding-left:20px;font-size:14px;line-height:1.6;margin:0 0 16px;">
+      <li>Open the SKILL.md on GitHub or copy the prompt below.</li>
+      <li>Paste it into your AI agent (ClawPilot, Claude Code, Cursor, or Copilot Chat).</li>
+      <li>The agent reads the skill and walks you through the task.</li>
+    </ol>
+    <label style="display:block;font-weight:600;font-size:13px;margin-bottom:6px;">Copy &amp; paste this into your agent:</label>
+    <textarea id="skillPromptBox" readonly style="width:100%;min-height:130px;font-family:'SF Mono',Menlo,monospace;font-size:12.5px;padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--bg-2);">${escapeHtml(prompt)}</textarea>
+    <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;align-items:center;">
+      <button class="btn btn-primary" id="skillCopyBtn" type="button">Copy prompt</button>
+      <a class="btn btn-ghost" href="${ghUrl}" target="_blank" rel="noopener">View SKILL.md on GitHub &rarr;</a>
+      <a class="btn btn-ghost" href="${rawUrl}" target="_blank" rel="noopener">Raw .md</a>
+      <span id="skillCopiedHint" style="display:none;font-size:12px;color:var(--ms-green);font-weight:600;">Copied — paste into your agent</span>
+    </div>
+  `;
+  modal.classList.add("open");
+  setTimeout(() => {
+    const btn = document.getElementById("skillCopyBtn");
+    if (btn) btn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(prompt);
+        const hint = document.getElementById("skillCopiedHint");
+        if (hint) { hint.style.display = "inline"; setTimeout(() => hint.style.display = "none", 2200); }
+      } catch (e) {
+        document.getElementById("skillPromptBox").select();
+        document.execCommand("copy");
+      }
+    });
+  }, 0);
 }
 
 function escapeHtml(s) {
@@ -772,9 +1522,9 @@ document.querySelectorAll("[data-open-submit]").forEach(el => el.addEventListene
 document.querySelectorAll("[data-close-submit]").forEach(el => el.addEventListener("click", closeSubmit));
 document.getElementById("submitModal").addEventListener("click", e => { if (e.target.id === "submitModal") closeSubmit(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeSubmit(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") { const m = document.getElementById("skillDetailModal"); if (m) m.classList.remove("open"); } });
 
 function parseSkillMd(text) {
-  // Extract YAML frontmatter (--- ... ---)
   const out = { name: "", description: "", tags: [] };
   const m = text.match(/^---\s*\n([\s\S]*?)\n---/);
   if (m) {
@@ -791,7 +1541,6 @@ function parseSkillMd(text) {
       else if (k === "tags") out.tags = v.split(/[,\[\]]/).map(x => x.trim()).filter(Boolean);
     });
   }
-  // If no name, try first H1
   if (!out.name) {
     const h1 = text.match(/^#\s+(.+)$/m);
     if (h1) out.name = h1[1].trim();
@@ -822,8 +1571,149 @@ dropZone.addEventListener("drop", e => {
   e.preventDefault(); dropZone.classList.remove("over");
   const f = e.dataTransfer.files[0]; if (f) loadFile(f);
 });
-fileInput.addEventListener("change", e => { const f = e.target.files[0]; if (f) loadFile(f); });
+fileInput.addEventListener("change", e => { const files = [...e.target.files]; if (files.length) handleFiles(files); });
 skillText.addEventListener("input", () => populateForm(parseSkillMd(skillText.value)));
+
+// Tabs
+document.querySelectorAll("#submitModal .tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    const target = tab.dataset.tab;
+    document.querySelectorAll("#submitModal .tab").forEach(t => {
+      t.classList.toggle("active", t.dataset.tab === target);
+      t.setAttribute("aria-selected", t.dataset.tab === target);
+    });
+    document.querySelectorAll("#submitModal .tab-pane").forEach(p => p.classList.toggle("active", p.dataset.pane === target));
+    if (target === "prompt") refreshPrompt();
+  });
+});
+
+// Template
+const SKILL_TEMPLATE = "---\nname: my-awesome-skill\ndescription: One-line summary of what this skill does and when to use it\nversion: 1.0.0\nauthor: Your Name\ncategory: AI & Agents\ntags: [azure, agents, demo]\ncompatible: [clawpilot, claude-code, cursor, copilot]\n---\n\n# My Awesome Skill\n\n## When to use this skill\n- Use when ...\n- Skip when ...\n\n## Inputs\n- ...\n\n## Steps\n1. ...\n2. ...\n\n## Outputs\n- ...\n\n## Examples\n```bash\n# Example call\n```\n";
+
+document.getElementById("loadTemplateBtn").addEventListener("click", () => {
+  if (skillText.value.trim() && !confirm("Replace current editor content?")) return;
+  skillText.value = SKILL_TEMPLATE;
+  populateForm(parseSkillMd(SKILL_TEMPLATE));
+});
+document.getElementById("reparseBtn").addEventListener("click", () => {
+  populateForm(parseSkillMd(skillText.value));
+  toast("Re-parsed from editor");
+});
+
+// Multi-file
+let bundleFiles = [];
+async function handleFiles(files) {
+  bundleFiles = [];
+  let mainSkillMd = null;
+  for (const f of files) {
+    if (!/\.md$/i.test(f.name) && !/^text\//i.test(f.type || "")) {
+      toast("Choose a SKILL.md file, or use the GitHub tab for multi-file skills.");
+      continue;
+    }
+    const text = await f.text();
+    bundleFiles.push({ name: f.name, kind: "text", size: f.size, content: text });
+    if (/skill\.md$/i.test(f.name) || (!mainSkillMd && /\.md$/i.test(f.name))) mainSkillMd = text;
+  }
+  if (mainSkillMd) {
+    skillText.value = mainSkillMd;
+    populateForm(parseSkillMd(mainSkillMd));
+  }
+  renderBundleList();
+}
+function renderBundleList() {
+  const el = document.getElementById("bundleFiles");
+  if (!bundleFiles.length) { el.style.display = "none"; return; }
+  el.style.display = "block";
+  el.innerHTML = "<strong>" + bundleFiles.length + " file(s) attached:</strong> " +
+    bundleFiles.map(f => "<code>" + escapeHtml(f.name) + "</code> <span style=\"opacity:.6\">(" + (f.size/1024).toFixed(1) + " KB)</span>").join(", ");
+}
+
+// GitHub fetch
+document.getElementById("fetchGhBtn").addEventListener("click", async () => {
+  const url = document.getElementById("f_gh_url").value.trim();
+  if (!url) { toast("Paste a GitHub URL first"); return; }
+  const preview = document.getElementById("ghPreview");
+  preview.style.display = "block";
+  document.getElementById("ghPreviewTitle").textContent = "Fetching...";
+  document.getElementById("ghPreviewMeta").textContent = url;
+  document.getElementById("ghPreviewBody").textContent = "";
+  try {
+    const result = await fetchGitHubSkill(url);
+    document.getElementById("ghPreviewTitle").textContent = "Fetched " + result.fileName;
+    document.getElementById("ghPreviewMeta").textContent = result.repo + " \u00B7 " + result.path;
+    document.getElementById("ghPreviewBody").textContent = result.content.slice(0, 2000) + (result.content.length > 2000 ? "\n... (truncated)" : "");
+    skillText.value = result.content;
+    populateForm(parseSkillMd(result.content));
+    bundleFiles = [{ name: "github-source.url", kind: "text", size: url.length, content: url }];
+    renderBundleList();
+    toast("Imported from GitHub");
+  } catch (e) {
+    document.getElementById("ghPreviewTitle").textContent = "Error: " + e.message;
+    document.getElementById("ghPreviewBody").textContent = "";
+  }
+});
+
+async function fetchGitHubSkill(url) {
+  let raw = null, repoLabel = url, pathLabel = "";
+  const rawMatch = url.match(/raw\.githubusercontent\.com\/([^/]+)\/([^/]+)\/([^/]+)\/(.+)/);
+  const treeMatch = url.match(/github\.com\/([^/]+)\/([^/]+)\/(?:tree|blob)\/([^/]+)\/(.+)/);
+  const repoMatch = url.match(/github\.com\/([^/]+)\/([^/]+)\/?$/);
+  if (rawMatch) {
+    const [, owner, repo, ref, path] = rawMatch;
+    raw = url; repoLabel = owner + "/" + repo + "@" + ref; pathLabel = path;
+  } else if (treeMatch) {
+    const [, owner, repo, ref, path] = treeMatch;
+    const candidates = [path.endsWith(".md") ? path : path + "/SKILL.md", path + "/skill.md", path + "/README.md"];
+    for (const c of candidates) {
+      const tryUrl = "https://raw.githubusercontent.com/" + owner + "/" + repo + "/" + ref + "/" + c;
+      const r = await fetch(tryUrl);
+      if (r.ok) { raw = tryUrl; pathLabel = c; break; }
+    }
+    repoLabel = owner + "/" + repo + "@" + ref;
+    if (!raw) throw new Error("No SKILL.md / README.md found under " + path);
+  } else if (repoMatch) {
+    const [, owner, repo] = repoMatch;
+    for (const c of ["SKILL.md", "skill.md", "README.md"]) {
+      for (const ref of ["main", "master"]) {
+        const tryUrl = "https://raw.githubusercontent.com/" + owner + "/" + repo + "/" + ref + "/" + c;
+        const r = await fetch(tryUrl);
+        if (r.ok) { raw = tryUrl; pathLabel = c; repoLabel = owner + "/" + repo + "@" + ref; break; }
+      }
+      if (raw) break;
+    }
+    if (!raw) throw new Error("No SKILL.md / README.md found at repo root");
+  } else {
+    throw new Error("Not a recognized GitHub URL");
+  }
+  const r = await fetch(raw);
+  if (!r.ok) throw new Error("Fetch failed: " + r.status);
+  const content = await r.text();
+  return { content, fileName: pathLabel.split("/").pop(), repo: repoLabel, path: pathLabel, sourceUrl: url };
+}
+
+// Ask ClawPilot prompt
+function refreshPrompt() {
+  const idea = (document.getElementById("f_idea").value || "<describe what your skill does>").trim();
+  const author = (document.getElementById("f_promptAuthor").value || "<your name>").trim();
+  const hubUrl = window.location.origin;
+  document.getElementById("agentPrompt").value = "You are my coding agent. Publish one of my skills to ClawPilot Hub.\n\n## Skill to publish\n" + idea + "\n\nAuthor: " + author + "\n\n## What to do\n1. Look in my workspace for the skill that best matches the description above.\n2. Make sure SKILL.md has clean YAML frontmatter.\n3. Open " + hubUrl + "/ in my default browser, click \"Submit a skill\" and paste the SKILL.md content.\n4. Report back with the issue URL.\n\n## Notes\n- Don't include secrets, API keys, or credentials in SKILL.md.\n- Keep SKILL.md under 200KB.";
+}
+["f_idea", "f_promptAuthor"].forEach(id => {
+  document.getElementById(id).addEventListener("input", refreshPrompt);
+});
+document.getElementById("copyPromptBtn").addEventListener("click", async () => {
+  const text = document.getElementById("agentPrompt").value;
+  try {
+    await navigator.clipboard.writeText(text);
+    const hint = document.getElementById("copiedHint");
+    hint.style.display = "inline";
+    setTimeout(() => { hint.style.display = "none"; }, 3000);
+  } catch (e) {
+    document.getElementById("agentPrompt").select();
+    document.execCommand("copy");
+    toast("Copied to clipboard");
+  }
+});
 
 function loadFile(file) {
   const reader = new FileReader();
@@ -845,8 +1735,7 @@ function collectForm() {
   if (!name) { toast("Skill name is required"); return null; }
   const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
   return {
-    slug,
-    name,
+    slug, name,
     description: document.getElementById("f_desc").value.trim() || "(no description)",
     category: document.getElementById("f_cat").value,
     version: document.getElementById("f_version").value.trim() || "1.0.0",
@@ -864,20 +1753,17 @@ document.getElementById("saveLocalBtn").addEventListener("click", () => {
   const idx = localSkills.findIndex(s => s.slug === skill.slug);
   if (idx >= 0) localSkills[idx] = skill; else localSkills.unshift(skill);
   saveLocal();
-  mergeAll(); renderCategoryStrip(); renderCategoryFilter(); renderGrid();
-  document.getElementById("m-skills").textContent = allSkills.length;
+  mergeAll(); renderCategoryStrip(); renderCategoryFilter(); renderGrid(); updateMetrics();
   closeSubmit();
   toast("Saved to your catalog. Visible only to you.");
 });
 
 document.getElementById("submitGhBtn").addEventListener("click", async () => {
   const skill = collectForm(); if (!skill) return;
-  // Save locally first (always)
   const idx = localSkills.findIndex(s => s.slug === skill.slug);
   if (idx >= 0) localSkills[idx] = skill; else localSkills.unshift(skill);
-  saveLocal(); mergeAll(); renderGrid();
+  saveLocal(); mergeAll(); renderCategoryStrip(); renderCategoryFilter(); renderGrid(); updateMetrics();
 
-  // If signed in via SWA AAD, submit through the API → opens a GitHub issue server-side
   if (currentUser) {
     try {
       const res = await fetch("/api/skills-submit", {
@@ -892,7 +1778,7 @@ document.getElementById("submitGhBtn").addEventListener("click", async () => {
       const j = await res.json();
       if (res.ok && j.ok) {
         closeSubmit();
-        toast("Submitted! Awaiting Roey's review.");
+        toast("Submitted! Awaiting review.");
         return;
       }
       toast("Submit failed: " + (j.error || res.status));
@@ -902,27 +1788,19 @@ document.getElementById("submitGhBtn").addEventListener("click", async () => {
     return;
   }
 
-  // Not signed in → fallback to opening a prefilled GitHub issue
   const body = [
-    "## Skill submission (anonymous - via Hub)",
-    "",
-    `- **Name:** ${skill.name}`,
-    `- **Slug:** \`${skill.slug}\``,
-    `- **Category:** ${skill.category}`,
-    `- **Version:** ${skill.version}`,
-    `- **Author:** ${skill.author}`,
-    `- **Tags:** ${skill.tags.join(", ") || "(none)"}`,
-    `- **Compatible with:** ${skill.compatible.join(", ")}`,
-    "",
-    `### Description`,
-    skill.description,
-    "",
-    `### SKILL.md`,
-    "```markdown",
-    skill.skillMd || "(paste your SKILL.md here)",
-    "```"
+    "## Skill submission (anonymous - via Hub)", "",
+    "- **Name:** " + skill.name,
+    "- **Slug:** `" + skill.slug + "`",
+    "- **Category:** " + skill.category,
+    "- **Version:** " + skill.version,
+    "- **Author:** " + skill.author,
+    "- **Tags:** " + (skill.tags.join(", ") || "(none)"),
+    "- **Compatible with:** " + skill.compatible.join(", "),
+    "", "### Description", skill.description,
+    "", "### SKILL.md", "```markdown", skill.skillMd || "(paste your SKILL.md here)", "```"
   ].join("\n");
-  const url = `https://github.com/${GH_REPO}/issues/new?title=${encodeURIComponent("[skill] " + skill.name)}&labels=skill-submission&body=${encodeURIComponent(body)}`;
+  const url = "https://github.com/" + GH_REPO + "/issues/new?title=" + encodeURIComponent("[skill] " + skill.name) + "&labels=skill-submission&body=" + encodeURIComponent(body);
   window.open(url, "_blank", "noopener");
   closeSubmit();
   toast("Sign in for one-click submit, or finish the GitHub issue we just opened.");

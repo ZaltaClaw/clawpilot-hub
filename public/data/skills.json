@@ -1,5 +1,18 @@
 [
   {
+    "slug": "mcaps-deck",
+    "name": "MCAPS-Deck",
+    "category": "Sales & Demos",
+    "description": "Generate Microsoft MCAPS-styled .pptx presentations for Azure announcements, customer briefings, and Ignite-style decks.",
+    "tags": ["MCAPS", "Azure", "PowerPoint", "Ignite", "Presentation"],
+    "verified": true,
+    "popular": true,
+    "trending": true,
+    "version": "1.0.0",
+    "author": "MCAPS Israel",
+    "compatible": ["ClawPilot", "Claude Code", "Cursor", "GitHub Copilot"]
+  },
+  {
     "slug": "fabric-architect",
     "name": "Fabric Architect",
     "category": "Microsoft Fabric",
