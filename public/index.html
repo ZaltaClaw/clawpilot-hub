@@ -1775,20 +1775,31 @@ document.getElementById("submitGhBtn").addEventListener("click", async () => {
           compatible: skill.compatible, skillMd: skill.skillMd
         })
       });
-      const j = await res.json();
-      if (res.ok && j.ok) {
-        closeSubmit();
-        toast("Submitted! Awaiting review.");
-        return;
+      if (res.ok) {
+        let j = null; try { j = await res.json(); } catch (_) {}
+        if (j && j.ok) {
+          closeSubmit();
+          toast("Submitted! Awaiting review.");
+          return;
+        }
       }
-      toast("Submit failed: " + (j.error || res.status));
+      // /api/skills-submit is unavailable (e.g. the host doesn't run the
+      // Azure Functions backend) or returned a non-OK status. Fall through
+      // to the anonymous GitHub-issue flow below so the user still has a
+      // working submit path instead of a dead-end toast.
     } catch (e) {
-      toast("Submit failed: " + e.message);
+      // Network/transport error — fall through to the anonymous flow.
     }
-    return;
   }
 
-  const body = [
+  // Build a SHORT issue body. The actual SKILL.md is copied to the user's
+  // clipboard (below) rather than URL-encoded into the body= query param.
+  //
+  // Why: encodeURIComponent() of a real SKILL.md easily produces 10-20+ KB,
+  // and GitHub's new-issue endpoint rejects request URLs over ~8 KB with
+  // "Whoa there! Your request URL is too long." Keeping SKILL.md out of
+  // the URL makes this work for any size.
+  const issueBody = [
     "## Skill submission (anonymous - via Hub)", "",
     "- **Name:** " + skill.name,
     "- **Slug:** `" + skill.slug + "`",
@@ -1798,12 +1809,36 @@ document.getElementById("submitGhBtn").addEventListener("click", async () => {
     "- **Tags:** " + (skill.tags.join(", ") || "(none)"),
     "- **Compatible with:** " + skill.compatible.join(", "),
     "", "### Description", skill.description,
-    "", "### SKILL.md", "```markdown", skill.skillMd || "(paste your SKILL.md here)", "```"
+    "",
+    "### SKILL.md",
+    "<!-- Paste your SKILL.md content into the fenced block below. -->",
+    "<!-- It has been copied to your clipboard — Ctrl+V / Cmd+V works. -->",
+    "```markdown",
+    "",
+    "```"
   ].join("\n");
-  const url = "https://github.com/" + GH_REPO + "/issues/new?title=" + encodeURIComponent("[skill] " + skill.name) + "&labels=skill-submission&body=" + encodeURIComponent(body);
+
+  let clipboardOk = false;
+  if (skill.skillMd) {
+    try {
+      await navigator.clipboard.writeText(skill.skillMd);
+      clipboardOk = true;
+    } catch (_) {
+      // Clipboard API may be blocked (insecure context or denied permission).
+      // The user can still copy SKILL.md from the editor manually.
+    }
+  }
+
+  const url = "https://github.com/" + GH_REPO + "/issues/new"
+    + "?title=" + encodeURIComponent("[skill] " + skill.name)
+    + "&labels=skill-submission"
+    + "&body=" + encodeURIComponent(issueBody);
+
   window.open(url, "_blank", "noopener");
   closeSubmit();
-  toast("Sign in for one-click submit, or finish the GitHub issue we just opened.");
+  toast(clipboardOk
+    ? "Issue opened. Your SKILL.md is in your clipboard \u2014 paste it inside the markdown block."
+    : "Issue opened. Paste your SKILL.md into the markdown block in the issue body.");
 });
 
 document.getElementById("searchInput").addEventListener("input", e => { activeQuery = e.target.value; renderGrid(); });
