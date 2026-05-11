@@ -4,168 +4,314 @@
     "name": "MCAPS-Deck",
     "category": "Sales & Demos",
     "description": "Generate Microsoft MCAPS-styled .pptx presentations for Azure announcements, customer briefings, and Ignite-style decks.",
-    "tags": ["MCAPS", "Azure", "PowerPoint", "Ignite", "Presentation"],
+    "tags": [
+      "MCAPS",
+      "Azure",
+      "PowerPoint",
+      "Ignite",
+      "Presentation"
+    ],
     "verified": true,
     "popular": true,
     "trending": true,
     "version": "1.0.0",
     "author": "MCAPS Israel",
-    "compatible": ["ClawPilot", "Claude Code", "Cursor", "GitHub Copilot"]
+    "compatible": [
+      "ClawPilot",
+      "Claude Code",
+      "Cursor",
+      "GitHub Copilot"
+    ]
   },
   {
     "slug": "fabric-architect",
     "name": "Fabric Architect",
     "category": "Microsoft Fabric",
     "description": "Design end-to-end Microsoft Fabric architectures: OneLake, Lakehouse vs Warehouse, Direct Lake, capacity sizing, governance.",
-    "tags": ["Fabric", "Data", "Architecture"],
+    "tags": [
+      "Fabric",
+      "Data",
+      "Architecture"
+    ],
     "verified": true,
     "popular": true,
     "trending": true,
     "version": "1.2.0",
     "author": "MCAPS Israel",
-    "compatible": ["ClawPilot", "Claude Code", "Cursor", "GitHub Copilot"]
+    "compatible": [
+      "ClawPilot",
+      "Claude Code",
+      "Cursor",
+      "GitHub Copilot"
+    ]
   },
   {
     "slug": "azure-architect",
     "name": "Azure Solution Architect",
     "category": "Azure",
     "description": "Generate WAF-aligned Azure architectures with cost estimates, security checklist, and Bicep templates.",
-    "tags": ["Azure", "WAF", "Bicep"],
+    "tags": [
+      "Azure",
+      "WAF",
+      "Bicep"
+    ],
     "verified": true,
     "popular": true,
     "trending": false,
     "version": "2.0.1",
     "author": "MCAPS Israel",
-    "compatible": ["ClawPilot", "Claude Code", "Cursor"]
+    "compatible": [
+      "ClawPilot",
+      "Claude Code",
+      "Cursor"
+    ]
   },
   {
     "slug": "agent-architect",
     "name": "Agent Architect",
     "category": "AI & Agents",
     "description": "Design multi-agent systems on Microsoft Agent Framework. Sub-agents, workflows, memory, eval.",
-    "tags": ["MAF", "Agents", "AI"],
+    "tags": [
+      "MAF",
+      "Agents",
+      "AI"
+    ],
     "verified": true,
     "popular": true,
     "trending": true,
     "version": "1.0.0",
     "author": "MCAPS Israel",
-    "compatible": ["ClawPilot", "Claude Code"]
+    "compatible": [
+      "ClawPilot",
+      "Claude Code"
+    ]
   },
   {
     "slug": "rag-designer",
     "name": "RAG Designer",
     "category": "AI & Agents",
     "description": "Design retrieval-augmented generation pipelines on Azure AI Search, Cosmos DB, and Fabric. Includes eval harness.",
-    "tags": ["RAG", "Azure AI Search", "Embeddings"],
+    "tags": [
+      "RAG",
+      "Azure AI Search",
+      "Embeddings"
+    ],
     "verified": true,
     "popular": true,
     "trending": false,
     "version": "1.1.0",
     "author": "MCAPS Israel",
-    "compatible": ["ClawPilot", "Claude Code", "Cursor"]
+    "compatible": [
+      "ClawPilot",
+      "Claude Code",
+      "Cursor"
+    ]
   },
   {
     "slug": "demo-prepper",
     "name": "Demo Prepper",
     "category": "Sales & Demos",
     "description": "Prep customer-facing demos: scenario script, talk track, fallback plan, recovery moves when something breaks live.",
-    "tags": ["Demos", "Sales", "Presentation"],
+    "tags": [
+      "Demos",
+      "Sales",
+      "Presentation"
+    ],
     "verified": true,
     "popular": false,
     "trending": true,
     "version": "0.9.0",
     "author": "MCAPS Israel",
-    "compatible": ["ClawPilot"]
+    "compatible": [
+      "ClawPilot"
+    ]
   },
   {
     "slug": "msft-pitch",
     "name": "Microsoft Pitch Builder",
     "category": "Sales & Demos",
     "description": "Generate customer-tailored Microsoft pitches aligned to MCAPS narratives: AI, Data, Cloud Migration, Security.",
-    "tags": ["Pitch", "MCAPS", "Sales"],
+    "tags": [
+      "Pitch",
+      "MCAPS",
+      "Sales"
+    ],
     "verified": true,
     "popular": true,
     "trending": false,
     "version": "1.0.2",
     "author": "MCAPS Israel",
-    "compatible": ["ClawPilot"]
+    "compatible": [
+      "ClawPilot"
+    ]
   },
   {
     "slug": "hebrew-reviewer",
     "name": "Hebrew Content Reviewer",
     "category": "Content & Localization",
     "description": "Review Hebrew technical content for clarity, RTL formatting, and proper handling of inline English terms.",
-    "tags": ["Hebrew", "Content", "RTL"],
+    "tags": [
+      "Hebrew",
+      "Content",
+      "RTL"
+    ],
     "verified": true,
     "popular": true,
     "trending": false,
     "version": "1.4.0",
     "author": "MCAPS Israel",
-    "compatible": ["ClawPilot", "Claude Code", "Cursor"]
+    "compatible": [
+      "ClawPilot",
+      "Claude Code",
+      "Cursor"
+    ]
   },
   {
     "slug": "linkedin-mcaps",
     "name": "LinkedIn Post (MCAPS Voice)",
     "category": "Content & Localization",
     "description": "Draft LinkedIn posts for MCAPS sellers and engineers in builder voice. Hebrew + English.",
-    "tags": ["LinkedIn", "Content", "Hebrew"],
+    "tags": [
+      "LinkedIn",
+      "Content",
+      "Hebrew"
+    ],
     "verified": true,
     "popular": false,
     "trending": true,
     "version": "1.0.0",
     "author": "MCAPS Israel",
-    "compatible": ["ClawPilot"]
+    "compatible": [
+      "ClawPilot"
+    ]
   },
   {
     "slug": "fabric-cost-optimizer",
     "name": "Fabric Cost Optimizer",
     "category": "Microsoft Fabric",
     "description": "Audit Fabric capacity usage, identify hot artifacts, recommend SKU right-sizing or autoscale.",
-    "tags": ["Fabric", "Cost", "FinOps"],
+    "tags": [
+      "Fabric",
+      "Cost",
+      "FinOps"
+    ],
     "verified": true,
     "popular": false,
     "trending": false,
     "version": "0.8.0",
     "author": "MCAPS Israel",
-    "compatible": ["ClawPilot"]
+    "compatible": [
+      "ClawPilot"
+    ]
   },
   {
     "slug": "azure-cost-audit",
     "name": "Azure Cost Audit",
     "category": "Azure",
     "description": "Audit Azure subscription spend, flag idle resources, suggest reserved instances and savings plans.",
-    "tags": ["Azure", "FinOps", "Cost"],
+    "tags": [
+      "Azure",
+      "FinOps",
+      "Cost"
+    ],
     "verified": true,
     "popular": true,
     "trending": false,
     "version": "1.3.0",
     "author": "MCAPS Israel",
-    "compatible": ["ClawPilot", "Claude Code"]
+    "compatible": [
+      "ClawPilot",
+      "Claude Code"
+    ]
   },
   {
     "slug": "copilot-studio-builder",
     "name": "Copilot Studio Builder",
     "category": "AI & Agents",
     "description": "Scaffold Copilot Studio agents with topics, knowledge sources, actions, and authentication.",
-    "tags": ["Copilot Studio", "AI", "Low Code"],
+    "tags": [
+      "Copilot Studio",
+      "AI",
+      "Low Code"
+    ],
     "verified": true,
     "popular": false,
     "trending": true,
     "version": "0.7.0",
     "author": "MCAPS Israel",
-    "compatible": ["ClawPilot"]
+    "compatible": [
+      "ClawPilot"
+    ]
   },
   {
     "slug": "security-review",
     "name": "Azure Security Review",
     "category": "Security",
     "description": "Review Azure landing zone security: identity, network, data, monitoring. Aligns to MCSB and Zero Trust.",
-    "tags": ["Security", "Zero Trust", "MCSB"],
+    "tags": [
+      "Security",
+      "Zero Trust",
+      "MCSB"
+    ],
     "verified": true,
     "popular": false,
     "trending": false,
     "version": "1.0.0",
     "author": "MCAPS Israel",
-    "compatible": ["ClawPilot", "Claude Code", "Cursor"]
+    "compatible": [
+      "ClawPilot",
+      "Claude Code",
+      "Cursor"
+    ]
+  },
+  {
+    "slug": "azure-price",
+    "name": "Azure Price",
+    "category": "Azure",
+    "description": "Download the Microsoft Enterprise EA (E6) Azure price list directly from APT and run fast SQL queries over it locally with DuckDB. Includes a fully automated monthly refresh.",
+    "tags": [
+      "Azure",
+      "Pricing",
+      "EA",
+      "Enterprise 6",
+      "APT",
+      "DuckDB"
+    ],
+    "verified": true,
+    "popular": false,
+    "trending": true,
+    "version": "1.0.0",
+    "author": "MCAPS Israel",
+    "compatible": [
+      "ClawPilot",
+      "Claude Code",
+      "Cursor",
+      "GitHub Copilot"
+    ]
+  },
+  {
+    "slug": "ea-discount-list",
+    "name": "EA Discount List",
+    "category": "Sales & Demos",
+    "description": "Build a per-customer Excel deliverable that lists Azure EA part numbers (one tab per service) with NetPrice, ERP, and the seller-requested discount % + post-discount price for the Deal Desk.",
+    "tags": [
+      "Azure",
+      "EA",
+      "Pricing",
+      "Discount",
+      "Deal Desk",
+      "Excel"
+    ],
+    "verified": true,
+    "popular": false,
+    "trending": true,
+    "version": "1.0.0",
+    "author": "MCAPS Israel",
+    "compatible": [
+      "ClawPilot",
+      "Claude Code",
+      "Cursor",
+      "GitHub Copilot"
+    ]
   }
 ]
